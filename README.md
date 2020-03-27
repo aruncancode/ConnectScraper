@@ -21,9 +21,9 @@ If the above doesn't work go to: <https://github.com/pypa/pipenv>
 
 - [x] Login to connect.
 - [x] Get the html of a page.
-- [ ] Get the javascript in the page to run.
-- [ ] Parse it.
-- [ ] Create SQL database to store userdata
+- [ ] Get the javascript in the page to run. @urwrstkn8mare and @aruncancode are working on this
+- [ ] Parse it. @aruncancode is working on this
+- [ ] Create SQL database to store userdata @aruncancode is working on this
 - [ ] Display database information to user via various means eg. Discord, Website, Excel, CLI
 
 ## Known Issues
