@@ -1,0 +1,21 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies with pipenv
+        run: |
+          pip install pipenv
+          pipenv install --deploy --dev
+
+      - run: pipenv run flake8 --ignore=E203,W503 --max-line-length=80
