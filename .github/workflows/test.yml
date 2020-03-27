@@ -20,4 +20,13 @@ jobs:
           pip install pipenv
           pipenv install --deploy --dev
 
-      - run: pipenv run black .
+      - run: pipenv run black --check -l 80 .
+
+      - name: Push formatted python files.
+        if: failure()
+        run: |
+          pipenv run black -l 80 .
+          git config --global user.name github-actions
+          git config --global user.email '${GITHUB_ACTOR}@users.noreply.github.com'
+          git commit -am "Automated black formatting"
+          git push
