@@ -14,7 +14,9 @@ class ConnectApi:
 
     def login(self):
         with Session() as self.__s:
-            site = self.__s.get("https://login.det.wa.edu.au/oam/server/obrareq.cgi?encquery%3DbPKvnLG4zJaQiON3%2Bp9vQkDuz5KpPGozevLjKgY76eSGfwKkjlotkknV5QNphwEFWqSgsivKQRpo9gNd8XvGj960VAV5X8UAGJMzW%2Fk6LoorLp2kg3y2ltk0PunbQh%2FLePCIXxtDBX3OX07vYS6soVgDPkJzNl%2Btc%2B1uwXqb8P3LaP3mJkwVx2XVCf3AI7N6Pc751JpS9ZWcD1O8pboDrNrLefBNSjS9arWkQ0Z8QcXHAHTn9rii3eBCMEzvdKj2RtLC%2FMiUQvdtM5TsBtreZlrwR50xkss3JkoKStatb9Q3h%2BeGoP3ZB5shYKx7%2B4owl7sN%2FAiLdqnI84y8lB9Z3%2B2wKBgifCRvdC20Aw11g%2Bpf%2BiezpmVDQgQJP3vUypjl%20agentid%3DCONNECT%20ver%3D1%20crmethod%3D2&ECID-Context=1.97289976909130380%3BkXhglXjE")
+            site = self.__s.get(
+                "https://login.det.wa.edu.au/oam/server/obrareq.cgi?encquery%3DbPKvnLG4zJaQiON3%2Bp9vQkDuz5KpPGozevLjKgY76eSGfwKkjlotkknV5QNphwEFWqSgsivKQRpo9gNd8XvGj960VAV5X8UAGJMzW%2Fk6LoorLp2kg3y2ltk0PunbQh%2FLePCIXxtDBX3OX07vYS6soVgDPkJzNl%2Btc%2B1uwXqb8P3LaP3mJkwVx2XVCf3AI7N6Pc751JpS9ZWcD1O8pboDrNrLefBNSjS9arWkQ0Z8QcXHAHTn9rii3eBCMEzvdKj2RtLC%2FMiUQvdtM5TsBtreZlrwR50xkss3JkoKStatb9Q3h%2BeGoP3ZB5shYKx7%2B4owl7sN%2FAiLdqnI84y8lB9Z3%2B2wKBgifCRvdC20Aw11g%2Bpf%2BiezpmVDQgQJP3vUypjl%20agentid%3DCONNECT%20ver%3D1%20crmethod%3D2&ECID-Context=1.97289976909130380%3BkXhglXjE"
+            )
             bsContent = bs(site.content, "html.parser")
             hiddenStuff = {
                 "site2pstoretoken": bsContent.find(
