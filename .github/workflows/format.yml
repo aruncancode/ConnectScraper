@@ -20,7 +20,7 @@ jobs:
           pip install pipenv
           pipenv install --deploy --dev
 
-      - run: pipenv run black --check -l 80 .
+      - run: pipenv run black -l 80 .
 
       - name: Push formatted python files.
         if: failure()
