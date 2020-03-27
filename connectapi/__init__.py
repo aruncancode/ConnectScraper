@@ -53,9 +53,9 @@ class ConnectApi:
         if not isinstance(raw, bool):
             raise TypeError("The raw parameter must be a bool!")
 
-        rawPage = self.__s.get(url).text
+        page = self.__s.get(url)
 
         if raw:
-            return rawPage
+            return page.text
         else:
-            return bs(rawPage, "html.parser")
+            return bs(page.content, "html.parser")
