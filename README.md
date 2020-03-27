@@ -13,21 +13,19 @@ If the above doesn't work go to: <https://github.com/pypa/pipenv>
 
 ## Instructions
 
-1. Copy sensitiveInfoTemplate.json
-2. Rename it to sensitiveInfo.json
-3. Put in your username and password.
-4. Run test.py
-5. See the output in output.html
+1. Rename sensitiveInfoTemplate.json to sensitiveInfo.json
+2. Put in your connect username and password.
+3. Run test.py
 
 ## Todo
 
 - [x] Login to connect.
-- [ ] Get the html of a page.
+- [x] Get the html of a page.
 - [ ] Get the javascript in the page to run.
 - [ ] Parse it.
+- [ ] Create SQL database to store userdata
+- [ ] Display database information to user via various means eg. Discord, Website, Excel, CLI
 
 ## Known Issues
 
-- [ ] It's slow
-- [ ] Sometimes it times out and stuff a returned like session has expired.
-- [ ] Javascript instead of html (just need to render it.) @urwrstkn8mare is working on this.
+- [ ] Times out and returns errors.
