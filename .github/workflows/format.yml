@@ -21,7 +21,7 @@ jobs:
           pipenv install --deploy --dev
 
       - name: Check for unformatted python code.
-      - run: pipenv run black -l 80 .
+        run: pipenv run black -l 80 .
 
       - name: Format and push python files.
         if: failure()
