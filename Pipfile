@@ -6,13 +6,15 @@ verify_ssl = true
 [dev-packages]
 flake8 = "*"
 black = "*"
+pipenv-setup = "*"
 
 [packages]
 selenium = "*"
-chromedriver-autoinstaller = {git = "https://github.com/urwrstkn8mare/python-chromedriver-autoinstaller.git",ref = "master"}
+chromedriver-autoinstaller = "*"
+connect-api = {editable = true,path = "."}
 
 [requires]
-python_version = "3.7"
+python_version = "3.7.5"
 
 [pipenv]
 allow_prereleases = true

@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: connect-api
+Version: 0.0.1
+Summary: An API that webscrapes Connect DET.
+Home-page: https://github.com/aruncancode/connect-api
+Author: urwrstkn8mare + aruncancode
+License: UNKNOWN
+Description: # Connect API
+        
+        Made by @urwrstkn8mare and @aruncancode.
+        
+        ## Use pipenv
+        
+        1. To use pipenv run
+           `python3 -m pip install pipenv && python3 -m pipenv install` or
+           `py -m pip install pipenv && py -m pipenv install` on windows
+        2. Relaunch VSCode.
+        
+        If the above doesn't work go to: <https://github.com/pypa/pipenv>
+        
+        ## Instructions
+        
+        1. Rename sensitiveInfoTemplate.json to sensitiveInfo.json
+        2. Put in your connect username and password.
+        3. Run test.py
+        
+        ## Todo
+        
+        - [x] Login to connect.
+        - [x] Get the html of a page.
+        - [ ] Get the javascript in the page to run. @urwrstkn8mare and @aruncancode are working on this
+        - [ ] Parse it. @aruncancode is working on this
+        - [ ] Create SQL database to store userdata @aruncancode is working on this
+        - [ ] Display database information to user via various means eg. Discord, Website, Excel, CLI
+        
+        ## Known Issues
+        
+        - [ ] Times out and returns errors.
+        
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Requires-Python: >=3.7.5
+Description-Content-Type: text/markdown

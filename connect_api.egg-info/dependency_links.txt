@@ -1,0 +1,1 @@
+git+https://github.com/urwrstkn8mare/python-chromedriver-autoinstaller.git@master#egg=chromedriver-autoinstaller

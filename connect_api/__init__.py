@@ -16,7 +16,7 @@ class ConnectApi:
         if CHROME_DRIVER_PATH is None:
             import chromedriver_autoinstaller
 
-            CHROME_DRIVER_PATH = chromedriver_autoinstaller.install(cwd=True)
+            CHROME_DRIVER_PATH = chromedriver_autoinstaller.install()
         # The browser will close when it is garbage collected by the
         # interpreter. This shouldn't be a problem since it will stay
         # open as long as you are using it.
