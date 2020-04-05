@@ -14,7 +14,7 @@ chromedriver-autoinstaller = "*"
 connect-api = {editable = true,path = "."}
 
 [requires]
-python_version = "3.7.5"
+python_version = "3.7"
 
 [pipenv]
 allow_prereleases = true
