@@ -8,9 +8,8 @@ flake8 = "*"
 black = "*"
 
 [packages]
-requests = "*"
-beautifulsoup4 = "*"
-requests-html = "*"
+selenium = "*"
+chromedriver-autoinstaller = {git = "https://github.com/urwrstkn8mare/python-chromedriver-autoinstaller.git",ref = "master"}
 
 [requires]
 python_version = "3.7"
