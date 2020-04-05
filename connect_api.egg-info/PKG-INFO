@@ -41,5 +41,5 @@ Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: Development Status :: 3 - Alpha
 Classifier: Intended Audience :: Developers
-Requires-Python: >=3.7.5
+Requires-Python: ~=3.6
 Description-Content-Type: text/markdown
