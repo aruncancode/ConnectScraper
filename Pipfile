@@ -19,3 +19,6 @@ allow_prereleases = true
 
 [scripts]
 test = "python tests/test.py"
+sync-setup = "pipenv-setup sync"
+format = "black -l 80 ."
+lint = "flake8 --ignore=E203,W503 --max-line-length=80"
