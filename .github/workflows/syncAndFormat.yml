@@ -29,8 +29,7 @@ jobs:
         id: check1
         run: |
           pipenv run pipenv-setup sync
-          git diff --exit-code setup.py
-          echo ::set-output name=key::$?
+          git diff --exit-code setup.py; echo ::set-output name=key::$?
 
       - name: Commit setup.py .
         if: failure() && steps.check1.outputs.key == 1
@@ -40,8 +39,7 @@ jobs:
         id: check2
         if: always()
         run: |
-          pipenv run black --check -l 80 .
-          echo ::set-output name=key::$?
+          pipenv run black --check -l 80 .; echo ::set-output name=key::$?
 
       - name: Format and commit python files.
         if: failure() && steps.check2.outputs.key == 1
