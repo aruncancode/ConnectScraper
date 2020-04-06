@@ -13,4 +13,4 @@ connect.login()
 
 time.sleep(2)
 
-print(connect.test())
+print(connect.submissions())

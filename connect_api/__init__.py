@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup as soup
 import time
+from datetime import date
+
 
 CHROME_DRIVER_PATH = None
 
@@ -15,6 +17,9 @@ class ConnectApi:
 
         self.__username = username
         self.__password = password
+        self.current_date = str(
+            date.today()
+        )  # i can't be bothered doing the self.__ thing
 
         global CHROME_DRIVER_PATH
 
@@ -72,8 +77,10 @@ class ConnectApi:
 
         temp_db["Title"].append(event_title.text)
         temp_db["Body"].append(" ".join(event_body.text.split()))
-        temp_db["Date"].append("6/4/2020")
-        temp_db["Class"].append()
+        temp_db["Date"].append(self.current_date)
+        temp_db[
+            "Class"
+        ].append()  # have to find a way to identify which class the notice came from
 
         return temp_db
 
@@ -82,47 +89,31 @@ class ConnectApi:
 
         submission_name = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div/div[2]/div/div/div/div[1]',
+            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[1]",
         ).get_attribute("innerHTML")
 
         submission_class = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div/div[2]/div/div/div/div[2]',
+            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]",
         ).get_attribute("innerHTML")
 
         submission_due_date = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div[2]/div[2]/div/div',
+            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[3]",
         ).get_attribute("innerHTML")
 
         submission_status = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div/div[2]/div/div/div/div[4]/div[2]',
+            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[4]/div[2]",
         ).get_attribute("innerHTML")
 
-        submission_name = soup(submission_name, "html.parser")
-        submission_due_date = soup(submission_due_date, "html.parser")
-
-        sub_db["Name"] = submission_name.text
-        sub_db["Due Date"] = submission_due_date.text
-        sub_db["Date"] = "6/4/2020"
-        sub_db["Status"] = submission_status.text
-        sub_db["Class"] = submission_class.text
+        sub_db["Name"] = submission_name
+        sub_db["Due Date"] = submission_due_date
+        sub_db["Date"] = self.current_date
+        # ^^^^ for db managing purposes only and will probably be moved to a differnt module
+        sub_db["Status"] = submission_status
+        sub_db["Class"] = submission_class
 
         return sub_db
 
-    def test(self):
-        # submission_name = self.browser.find_element(
-        #     By.XPATH,
-        #     '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]',
-        # ).get_attribute("value")
-
-        self.browser.get(
-            "https://connect.det.wa.edu.au/group/students/ui/my-settings/profile"
-        )
-        time.sleep(5)
-
-        submission_name_class = self.browser.find_element_by_class_name(
-            '//*[@id="v-myclassesminiportlet_WAR_connectrvportlet_INSTANCE_hkO0RfHO0arq_LAYOUT_228"]/div/div[2]/div/div[2]/div/div[1]/div/div/div[2]/div'
-        )
-        return submission_name_class.text
+        # all dicts are a proof of concept and will be removed indefintely to another module
