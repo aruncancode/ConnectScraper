@@ -10,12 +10,12 @@ Made by @urwrstkn8mare and @aruncancode.
 
 ## Instructions
 
-1. Create a copy of the sensitiveInfoTemplate.json file.
-2. Rename the copy to sensitveInfo.json
+1. Create a copy of the [sensitiveInfoTemplate.json](sensitiveInfoTemplate.json) file.
+2. Rename the copy to [sensitveInfo.json](sensitiveInfo.json)
 3. Replace the `username` and `password` values with your username and password.
-4. Run the test.py with `pipenv run test`
+4. Run the [test.py](tests/test.py) with `pipenv run test`
 
-   NOTE: You can run python files with `pipenv run python <python file>`!
+_NOTE: You can run python files with `pipenv run python <python file>`!_
 
 ## Todo
 
