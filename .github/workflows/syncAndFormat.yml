@@ -33,7 +33,7 @@ jobs:
           echo ::set-output name=key::$?
 
       - name: Commit setup.py .
-        if: $? == 1
+        if: steps.check1.outputs.key == 1
         run: git commit -am "Auto setup.py syncing."
 
       - name: Check for unformatted python code.
@@ -43,7 +43,7 @@ jobs:
           echo ::set-output name=key::$?
 
       - name: Format and commit python files.
-        if: $? == 1
+        if: steps.check2.outputs.key == 1
         run: |
           pipenv run black -l 80 .
           git commit -am "Auto black formatting"
