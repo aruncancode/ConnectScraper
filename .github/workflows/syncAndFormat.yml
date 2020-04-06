@@ -33,20 +33,22 @@ jobs:
           echo ::set-output name=key::$?
 
       - name: Commit setup.py .
-        if: steps.check1.outputs.key == 1
+        if: failure() && steps.check1.outputs.key == 1
         run: git commit -am "Auto setup.py syncing."
 
       - name: Check for unformatted python code.
         id: check2
+        if: always()
         run: |
           pipenv run black --check -l 80 .
           echo ::set-output name=key::$?
 
       - name: Format and commit python files.
-        if: steps.check2.outputs.key == 1
+        if: failure() && steps.check2.outputs.key == 1
         run: |
           pipenv run black -l 80 .
           git commit -am "Auto black formatting"
 
       - name: Push changes.
+        if: always()
         run: git push
