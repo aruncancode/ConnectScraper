@@ -78,7 +78,13 @@ class ConnectApi:
         return temp_db
 
     def submissions(self):
-        sub_db = {"Name": [], "Date": [], "Due Date": [], "Class": [], "Status": []}
+        sub_db = {
+            "Name": [],
+            "Date": [],
+            "Due Date": [],
+            "Class": [],
+            "Status": [],
+        }
 
         submission_name = self.browser.find_element(
             By.XPATH,
