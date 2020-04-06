@@ -7,15 +7,14 @@ verify_ssl = true
 flake8 = "*"
 black = "*"
 pipenv-setup = "*"
+connect-api = {editable = true,path = "."}
 
 [packages]
 selenium = "*"
 chromedriver-autoinstaller = "*"
-connect-api = {editable = true,path = "."}
 
 [pipenv]
 allow_prereleases = true
 
 [scripts]
 test = "python tests/test.py"
-sync-setup = "pipenv-setup sync"
