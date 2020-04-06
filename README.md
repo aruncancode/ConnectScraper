@@ -6,7 +6,7 @@ Made by @urwrstkn8mare and @aruncancode.
 
 1. [Install pipenv package](https://pipenv.pypa.io/en/latest/install/#installing-pipenv)
 2. `cd` into the repository. (eg. `cd connect-api`)
-3. run `pipenv install`.
+3. run `pipenv install --dev`.
 
 ## Instructions
 
