@@ -18,3 +18,4 @@ allow_prereleases = true
 
 [scripts]
 test = "python tests/test.py"
+sync-setup = "pipenv-setup sync"
