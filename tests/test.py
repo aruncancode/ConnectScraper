@@ -10,8 +10,7 @@ connect = ConnectApi(
     sensitiveInfo["username"], sensitiveInfo["password"], headless=True
 )
 connect.login()
-# After this is done the python garbage collector will automatically
-# close the browser.
+
 time.sleep(2)
 
-print(connect.notices())
+print(connect.test())

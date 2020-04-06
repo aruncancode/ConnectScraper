@@ -70,8 +70,59 @@ class ConnectApi:
         event_body = soup(event_body, "html.parser")
         event_title = soup(event_title, "html.parser")
 
-        temp_db["Name"].append(event_title.text)
+        temp_db["Title"].append(event_title.text)
         temp_db["Body"].append(" ".join(event_body.text.split()))
         temp_db["Date"].append("6/4/2020")
+        temp_db["Class"].append()
 
         return temp_db
+
+    def submissions(self):
+        sub_db = {"Name": [], "Date": [], "Due Date": [], "Class": [], "Status": []}
+
+        submission_name = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div/div[2]/div/div/div/div[1]',
+        ).get_attribute("innerHTML")
+
+        submission_class = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div/div[2]/div/div/div/div[2]',
+        ).get_attribute("innerHTML")
+
+        submission_due_date = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div[2]/div[2]/div/div',
+        ).get_attribute("innerHTML")
+
+        submission_status = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div/div[2]/div/div/div/div[4]/div[2]',
+        ).get_attribute("innerHTML")
+
+        submission_name = soup(submission_name, "html.parser")
+        submission_due_date = soup(submission_due_date, "html.parser")
+
+        sub_db["Name"] = submission_name.text
+        sub_db["Due Date"] = submission_due_date.text
+        sub_db["Date"] = "6/4/2020"
+        sub_db["Status"] = submission_status.text
+        sub_db["Class"] = submission_class.text
+
+        return sub_db
+
+    def test(self):
+        # submission_name = self.browser.find_element(
+        #     By.XPATH,
+        #     '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]',
+        # ).get_attribute("value")
+
+        self.browser.get(
+            "https://connect.det.wa.edu.au/group/students/ui/my-settings/profile"
+        )
+        time.sleep(5)
+
+        submission_name_class = self.browser.find_element_by_class_name(
+            '//*[@id="v-myclassesminiportlet_WAR_connectrvportlet_INSTANCE_hkO0RfHO0arq_LAYOUT_228"]/div/div[2]/div/div[2]/div/div[1]/div/div/div[2]/div'
+        )
+        return submission_name_class.text
