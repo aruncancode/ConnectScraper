@@ -1,3 +1,5 @@
 sensitiveInfo.json
 output.html
 .vscode/settings.json
+Pipfile.lock
+connect_api.egg-info

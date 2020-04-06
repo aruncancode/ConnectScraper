@@ -4,10 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    dependency_links=[
-        "git+https://github.com/urwrstkn8mare/python-chromedriver-autoinstaller.git@master#egg=chromedriver-autoinstaller"
-    ],
-    install_requires=["selenium"],
+    install_requires=["selenium", "chromedriver-autoinstaller"],
     name="connect_api",
     version="0.0.1",
     author="urwrstkn8mare + aruncancode",
