@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from bs4 import BeautifulSoup as soup
+import time
 
 CHROME_DRIVER_PATH = None
 
@@ -10,16 +12,17 @@ class ConnectApi:
             raise TypeError("The username parameter must be a string.")
         if not isinstance(password, str):
             raise TypeError("The password parameter must be a string.")
+
         self.__username = username
         self.__password = password
+
         global CHROME_DRIVER_PATH
+
         if CHROME_DRIVER_PATH is None:
             import chromedriver_autoinstaller
 
             CHROME_DRIVER_PATH = chromedriver_autoinstaller.install()
-        # The browser will close when it is garbage collected by the
-        # interpreter. This shouldn't be a problem since it will stay
-        # open as long as you are using it.
+
         if headless:
             from selenium.webdriver.chrome.options import Options
 
@@ -44,3 +47,31 @@ class ConnectApi:
         checkBox.click()
         loginButton = self.browser.find_element(By.ID, "login")
         loginButton.click()
+
+    def notices(self):
+        temp_db = {"Name": [], "Date": [], "Body": []}
+        notice_btn = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215"]/div/div[2]/div/div[1]/div[2]/span/span',
+        )
+        notice_btn.click()
+        time.sleep(1)
+
+        event_title = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[2]/div[3]/div[2]/div[1]/div[1]/b',
+        ).get_attribute("innerHTML")
+
+        event_body = self.browser.find_element(
+            By.XPATH,
+            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[2]/div[3]/div[2]/div[1]',
+        ).get_attribute("innerHTML")
+
+        event_body = soup(event_body, "html.parser")
+        event_title = soup(event_title, "html.parser")
+
+        temp_db["Name"].append(event_title.text)
+        temp_db["Body"].append(" ".join(event_body.text.split()))
+        temp_db["Date"].append("6/4/2020")
+
+        return temp_db

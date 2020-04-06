@@ -12,6 +12,7 @@ connect-api = {editable = true,path = "."}
 [packages]
 selenium = "*"
 chromedriver-autoinstaller = "*"
+bs4 = "*"
 
 [pipenv]
 allow_prereleases = true
