@@ -30,4 +30,6 @@ setup first before running:
     2. comment out all code from 4-23
     3. uncomment the add person command lines, and run the code.
     4. now you should be able to run the loop which basically simulates periodic update to the db
+    5. looking back at this you have to setupt the db more i will just commit mine and take out the password.
+    6. rename usersTEMPLATE To users and probably just fill in the users serction with your creditntials instaed of the above code.
 """
