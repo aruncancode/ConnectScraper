@@ -8,10 +8,14 @@ flake8 = "*"
 black = "*"
 pipenv-setup = "*"
 connect-api = {editable = true,path = "."}
+yapf = "*"
 
 [packages]
 selenium = "*"
 chromedriver-autoinstaller = "*"
+bs4 = "*"
+datetime = "*"
+discord = "*"
 
 [pipenv]
 allow_prereleases = true
