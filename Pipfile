@@ -7,7 +7,7 @@ verify_ssl = true
 flake8 = "*"
 black = "*"
 pipenv-setup = "*"
-connect-api = {editable = true,path = "."}
+connect_parser = {editable = true,path = "."}
 yapf = "*"
 
 [packages]
