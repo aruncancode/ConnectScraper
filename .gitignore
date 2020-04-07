@@ -2,3 +2,4 @@ sensitiveInfo.json
 .vscode/settings.json
 Pipfile.lock
 connect_api.egg-info
+test.db

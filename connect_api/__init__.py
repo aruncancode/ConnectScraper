@@ -54,22 +54,22 @@ class ConnectApi:
         loginButton.click()
 
     def notices(self):
-        temp_db = {"Name": [], "Date": [], "Body": []}
+        temp_db = {"Title": [], "Date": [], "Body": [], "Class": []}
         notice_btn = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215"]/div/div[2]/div/div[1]/div[2]/span/span',
+            "/html/body/main/div/div[2]/div[1]/div[1]/div/div/div[3]/section/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/span/span",
         )
         notice_btn.click()
         time.sleep(1)
 
         event_title = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[2]/div[3]/div[2]/div[1]/div[1]/b',
+            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[1]',
         ).get_attribute("innerHTML")
 
         event_body = self.browser.find_element(
             By.XPATH,
-            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[2]/div[3]/div[2]/div[1]',
+            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[2]',
         ).get_attribute("innerHTML")
 
         event_body = soup(event_body, "html.parser")
@@ -78,9 +78,7 @@ class ConnectApi:
         temp_db["Title"].append(event_title.text)
         temp_db["Body"].append(" ".join(event_body.text.split()))
         temp_db["Date"].append(self.current_date)
-        temp_db[
-            "Class"
-        ].append()  # have to find a way to identify which class the notice came from
+        # have to find a way to identify which class the notice came from
 
         return temp_db
 
@@ -116,10 +114,30 @@ class ConnectApi:
         sub_db["Name"] = submission_name
         sub_db["Due Date"] = submission_due_date
         sub_db["Date"] = self.current_date
-        # ^^^^ for db managing purposes only and will probably be moved to a differnt module
+        # ^^^^ DATE is for db managing purposes only and will probably be moved to a differnt module
         sub_db["Status"] = submission_status
         sub_db["Class"] = submission_class
 
         return sub_db
 
+    def marks(self):
+        self.browser.get(
+            "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"
+        )
+        time.sleep(2)
+
+        show_details = self.browser.find_element(
+            By.XPATH,
+            "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[1]/div/div[2]",
+        )
+        show_details.click()
+
+        submission_name = self.browser.find_element(
+            By.XPATH,
+            "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[1]/div/div[2]",
+        ).get_attribute("innerHTML")
+
+        parsed_data = soup(submission_name, "html.parser")
+
+        return parsed_data.text
         # all dicts are a proof of concept and will be removed indefintely to another module

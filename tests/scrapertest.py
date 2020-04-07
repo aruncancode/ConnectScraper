@@ -7,10 +7,10 @@ sensitiveInfo = json.loads(f.read())
 f.close()
 
 connect = ConnectApi(
-    sensitiveInfo["username"], sensitiveInfo["password"], headless=False
+    sensitiveInfo["username"], sensitiveInfo["password"], headless=True
 )
 connect.login()
 
 time.sleep(2)
 
-print(connect.submissions())
+print(connect.notices())
