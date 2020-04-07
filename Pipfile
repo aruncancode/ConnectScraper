@@ -14,6 +14,7 @@ selenium = "*"
 chromedriver-autoinstaller = "*"
 bs4 = "*"
 datetime = "*"
+discord = "*"
 
 [pipenv]
 allow_prereleases = true
