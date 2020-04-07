@@ -13,5 +13,6 @@ class MyClient(discord.Client):
 client = MyClient()
 client.run("Njk2OTcwMzE5NDAzMTU1NTI3.Xowf6g.Aqt7JDPXQ4uvUiFYDViVj_R8Vjw")
 
-
 client.notify(self.author, "Arun8560", "hi")
+
+#working progress main focus is db stuff , this doesn't really work yet

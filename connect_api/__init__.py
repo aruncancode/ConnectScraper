@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup as soup
 import time
 from datetime import date
 
-
 CHROME_DRIVER_PATH = None
 
 
@@ -18,8 +17,7 @@ class ConnectApi:
         self.__username = username
         self.__password = password
         self.current_date = str(
-            date.today()
-        )  # i can't be bothered doing the self.__ thing
+            date.today())  # i can't be bothered doing the self.__ thing
 
         global CHROME_DRIVER_PATH
 
@@ -36,9 +34,8 @@ class ConnectApi:
             options.add_argument("--headless")
             options.add_argument("--hide-scrollbars")
             options.add_argument("--log-level=3")  # fatal
-            self.browser = webdriver.Chrome(
-                executable_path=CHROME_DRIVER_PATH, options=options
-            )
+            self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH,
+                                            options=options)
         else:
             self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH)
 
@@ -53,8 +50,8 @@ class ConnectApi:
         loginButton = self.browser.find_element(By.ID, "login")
         loginButton.click()
 
-    def notices(self):
-        temp_db = {"Title": [], "Date": [], "Body": [], "Class": []}
+    def get_notices(self):
+        temp_db = {}
         notice_btn = self.browser.find_element(
             By.XPATH,
             "/html/body/main/div/div[2]/div[1]/div[1]/div/div/div[3]/section/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/span/span",
@@ -75,21 +72,16 @@ class ConnectApi:
         event_body = soup(event_body, "html.parser")
         event_title = soup(event_title, "html.parser")
 
-        temp_db["Title"].append(event_title.text)
-        temp_db["Body"].append(" ".join(event_body.text.split()))
-        temp_db["Date"].append(self.current_date)
+        temp_db["Title"] = event_title.text
+        temp_db["Body"] = " ".join(event_body.text.split())
+        temp_db["Date"] = self.current_date
+        temp_db['Person'] = self.__username
         # have to find a way to identify which class the notice came from
 
         return temp_db
 
-    def submissions(self):
-        sub_db = {
-            "Name": [],
-            "Date": [],
-            "Due Date": [],
-            "Class": [],
-            "Status": [],
-        }
+    def get_submissions(self):
+        sub_db = {}
 
         submission_name = self.browser.find_element(
             By.XPATH,
@@ -108,19 +100,23 @@ class ConnectApi:
 
         submission_status = self.browser.find_element(
             By.XPATH,
-            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[4]/div[2]",
+            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[4]/div[3]",
         ).get_attribute("innerHTML")
+        submission_status = soup(submission_status, 'html.parser')
 
-        sub_db["Name"] = submission_name
+        submission_body = 'na'
+
+        sub_db["Title"] = submission_name
         sub_db["Due Date"] = submission_due_date
         sub_db["Date"] = self.current_date
-        # ^^^^ DATE is for db managing purposes only and will probably be moved to a differnt module
-        sub_db["Status"] = submission_status
+        sub_db["Status"] = submission_status.text
         sub_db["Class"] = submission_class
+        sub_db['Body'] = submission_body
+        sub_db['Person'] = self.__username
 
         return sub_db
 
-    def marks(self):
+    def get_marks(self):
         self.browser.get(
             "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"
         )
@@ -140,4 +136,6 @@ class ConnectApi:
         parsed_data = soup(submission_name, "html.parser")
 
         return parsed_data.text
-        # all dicts are a proof of concept and will be removed indefintely to another module
+
+
+#extremely messy, needs to be fixed up.

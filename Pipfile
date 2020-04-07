@@ -8,6 +8,7 @@ flake8 = "*"
 black = "*"
 pipenv-setup = "*"
 connect-api = {editable = true,path = "."}
+yapf = "*"
 
 [packages]
 selenium = "*"
