@@ -25,5 +25,5 @@ _NOTE: You can run python files with `pipenv run python <python file>`!_
 - [x] Get the javascript in the page to run. @urwrstkn8mare and @aruncancode are working on this
 - [x] Parse it. @aruncancode is working on this
 - [x] Create SQL database to store userdata @aruncancode is working on this
-- [ ] Perodic GET requests to connect and update dateabse @aruncancode is working on this
-- [ ] Discord integration @both are workong on this
+- [ ] Perodic GET requests to connect and update database @aruncancode is working on this
+- [ ] Discord integration @urwrstkn8mare and @aruncancode are working on this
