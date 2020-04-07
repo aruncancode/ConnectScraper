@@ -23,7 +23,7 @@ _NOTE: You can run python files with `pipenv run python <python file>`!_
 - [x] Login to connect.
 - [x] Get the html of a page.
 - [x] Get the javascript in the page to run. @urwrstkn8mare and @aruncancode are working on this
-- [ ] Parse it. @aruncancode is working on this
-- [ ] Create SQL database to store userdata @aruncancode is working on this
-- [ ] Display database information to user via various means eg. Discord, Website, Excel, CLI
-      That is something that would use this module but we will work on it anyway.
+- [x] Parse it. @aruncancode is working on this
+- [x] Create SQL database to store userdata @aruncancode is working on this
+- [ ] Perodic GET requests to connect and update dateabse @aruncancode is working on this
+- [ ] Discord integration @both are workong on this
