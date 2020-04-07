@@ -1,4 +1,4 @@
-# Connect API
+# Connect Scraper
 
 Made by @urwrstkn8mare and @aruncancode.
 
