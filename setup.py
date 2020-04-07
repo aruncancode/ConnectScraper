@@ -25,7 +25,7 @@ setup(
         "yarl==1.4.2",
         "zope.interface==5.0.2",
     ],
-    name="connect_api",
+    name="connect_scraper",
     version="0.0.1",
     author="urwrstkn8mare + aruncancode",
     description="An API that webscrapes Connect DET.",
