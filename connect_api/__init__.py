@@ -17,7 +17,8 @@ class ConnectApi:
         self.__username = username
         self.__password = password
         self.current_date = str(
-            date.today())  # i can't be bothered doing the self.__ thing
+            date.today()
+        )  # i can't be bothered doing the self.__ thing
 
         global CHROME_DRIVER_PATH
 
@@ -34,8 +35,9 @@ class ConnectApi:
             options.add_argument("--headless")
             options.add_argument("--hide-scrollbars")
             options.add_argument("--log-level=3")  # fatal
-            self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH,
-                                            options=options)
+            self.browser = webdriver.Chrome(
+                executable_path=CHROME_DRIVER_PATH, options=options
+            )
         else:
             self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH)
 
@@ -75,7 +77,7 @@ class ConnectApi:
         temp_db["Title"] = event_title.text
         temp_db["Body"] = " ".join(event_body.text.split())
         temp_db["Date"] = self.current_date
-        temp_db['Person'] = self.__username
+        temp_db["Person"] = self.__username
         # have to find a way to identify which class the notice came from
 
         return temp_db
@@ -102,17 +104,17 @@ class ConnectApi:
             By.XPATH,
             "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[4]/div[3]",
         ).get_attribute("innerHTML")
-        submission_status = soup(submission_status, 'html.parser')
+        submission_status = soup(submission_status, "html.parser")
 
-        submission_body = 'na'
+        submission_body = "na"
 
         sub_db["Title"] = submission_name
         sub_db["Due Date"] = submission_due_date
         sub_db["Date"] = self.current_date
         sub_db["Status"] = submission_status.text
         sub_db["Class"] = submission_class
-        sub_db['Body'] = submission_body
-        sub_db['Person'] = self.__username
+        sub_db["Body"] = submission_body
+        sub_db["Person"] = self.__username
 
         return sub_db
 
@@ -138,4 +140,4 @@ class ConnectApi:
         return parsed_data.text
 
 
-#extremely messy, needs to be fixed up.
+# extremely messy, needs to be fixed up.

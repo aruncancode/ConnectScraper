@@ -1,7 +1,7 @@
 import sqlite3
 
 
-class UpdateDatabase():
+class UpdateDatabase:
     def __init__(self, file_name):
         self.conn = sqlite3.connect(file_name)
         self.c = self.conn.cursor()
@@ -30,10 +30,10 @@ class UpdateDatabase():
             self.c.execute(
                 "INSERT INTO Notices VALUES (:title, :body, :date, :person)",
                 {
-                    'title': dict['Title'],
-                    'body': dict['Body'],
-                    'date': dict['Date'],
-                    'person': dict['Person']
+                    "title": dict["Title"],
+                    "body": dict["Body"],
+                    "date": dict["Date"],
+                    "person": dict["Person"],
                 },
             )
 
@@ -43,13 +43,13 @@ class UpdateDatabase():
             self.c.execute(
                 "INSERT INTO Submissions VALUES (:title, :body, :date, :due_date, :class, :status, :person)",
                 {
-                    'title': dict['Title'],
-                    'body': dict['Body'],
-                    'date': dict['Date'],
-                    'due_date': dict['Due Date'],
-                    'class': dict['Class'],
-                    'status': dict['Status'],
-                    'person': dict['Person']
+                    "title": dict["Title"],
+                    "body": dict["Body"],
+                    "date": dict["Date"],
+                    "due_date": dict["Due Date"],
+                    "class": dict["Class"],
+                    "status": dict["Status"],
+                    "person": dict["Person"],
                 },
             )
 
