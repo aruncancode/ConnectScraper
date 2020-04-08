@@ -4,3 +4,4 @@ Pipfile.lock
 connect_api.egg-info
 test.db
 users.db
+tests/__pycache__
