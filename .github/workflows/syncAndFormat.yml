@@ -1,4 +1,4 @@
-# .github/workflows/test.yml
+# .github/workflows/syncAndFormat.yml
 
 name: Sync and Format
 
