@@ -38,3 +38,4 @@ jobs:
         if: always()
         with:
           commit_message: Auto Github Action Changes
+          commit_author: Author <actions@github.com>
