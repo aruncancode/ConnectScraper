@@ -28,14 +28,13 @@ jobs:
       - name: Sync setup.py and commit it.
         run: |
           pipenv run sync-setup
-          git commit -am "Auto setup.py syncing."
 
       - name: Format and commit python files.
         if: always()
         run: |
           pipenv run format
-          git commit -am "Auto black formatting"
 
-      - name: Push changes.
+      - uses: stefanzweifel/git-auto-commit-action@v4.1.2
         if: always()
-        run: git push
+        with:
+          commit_message: Auto Github Action Changes
