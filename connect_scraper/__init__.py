@@ -152,9 +152,5 @@ class ConnectScraper:
         return marks_db
 
 
-# /html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[1]/div/div[2]/div/div[4]/div/div/div[1]
-# /html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[2]/div/div[2]/div/div[4]/div/div/div[1]
-# /html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[1]/div/div[2]/div/div[4]/div/div[2]
-# /html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[2]/div/div[2]/div/div[4]/div/div[2]/div
-# /html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[%s]
+#
 # extremely messy, needs to be fixed up.

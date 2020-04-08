@@ -18,11 +18,12 @@ pe_string = "Yr 10 PE OnlyRaw ScoreWeighted MarkPhysical EducationSkills, concep
 
 
 def format(string):
-    string = string.replace("Raw Score", " Raw Score ")
-    string = string.replace("Weighted Mark", " Weighted Mark ")
-    raw_split = string.split("Raw Score")
-    weighted_split = string.split("Weighted Mark")
-    return weighted_split
+    string = string.replace("Raw Score", " Raw Score")
+    string = string.replace("Weighted Mark", " Weighted Mark")
+    string = string.split("Weighted Mark")
+    string = [e.replace("Raw Score", "") for e in string][1:]
+    string = [e.replace("-Out of", "") for e in string][1:]
+    return string
 
 
 print(format(english_string))
