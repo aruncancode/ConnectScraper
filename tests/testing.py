@@ -8,7 +8,7 @@ import sqlite3, time, json
 # result_set = c.fetchall()
 # c.close()
 
-result_set = [("arun.arjunan", "Arun2072004")]
+result_set = [("arun.arjunan", "none")]
 
 for username, password in result_set:
     connect = ConnectScraper(username, password, headless=True)
