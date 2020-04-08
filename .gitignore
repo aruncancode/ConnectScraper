@@ -1,7 +1,7 @@
 sensitiveInfo.json
 .vscode/settings.json
 Pipfile.lock
-connect_api.egg-info
+connect_scraper.egg-info
 test.db
 users.db
 tests/__pycache__

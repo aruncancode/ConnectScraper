@@ -7,7 +7,7 @@ from datetime import date
 CHROME_DRIVER_PATH = None
 
 
-class ConnectApi:
+class ConnectScraper:
     def __init__(self, username: str, password: str, *, headless=True):
         if not isinstance(username, str):
             raise TypeError("The username parameter must be a string.")

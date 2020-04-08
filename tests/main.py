@@ -1,5 +1,5 @@
 from UpdateDB import UpdateDatabase
-from connect_api import ConnectApi
+from connect_scraper import ConnectScraper
 import sqlite3, time, json
 
 conn = sqlite3.connect("users.db")
