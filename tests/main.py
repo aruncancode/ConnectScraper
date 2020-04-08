@@ -9,7 +9,7 @@ result_set = c.fetchall()
 c.close()
 
 for username, password in result_set:
-    connect = ConnectApi(username, password)
+    connect = ConnectScraper(username, password)
     connect.login()
     time.sleep(2)
 

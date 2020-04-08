@@ -57,14 +57,14 @@ class UpdateDatabase:
 
     #     with self.conn:
     #         self.c.execute(
-    #             "INSERT INTO Submissions VALUES (:title, :body, :date, :due_date, :class, :status, :person)",
+    #             "INSERT INTO Submissions VALUES (:title, :raw_mark, :weighted_mark, :percentage, :subject, :date, :person)",
     #             {
     #                 'title': dict['Title'],
-    #                 'body': dict['Body'],
+    #                 'raw_mark': dict['Raw_mark'],
+    #                 'weighted_mark': dict['Weighted_mark'],
+    #                 'percentage': dict['Percentage'],
+    #                 'subject': dict['Subject'],
     #                 'date': dict['Date'],
-    #                 'due_date': dict['Due date'],
-    #                 'class': dict['Class'],
-    #                 'status': dict['Status'],
     #                 'person': dict['Person']
     #             },
     #         )

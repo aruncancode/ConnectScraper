@@ -119,25 +119,38 @@ class ConnectScraper:
         return sub_db
 
     def get_marks(self):
+        marks_db = {}
+
         self.browser.get(
             "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"
         )
-        time.sleep(2)
 
-        show_details = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[1]/div/div[2]",
-        )
-        show_details.click()
+        time.sleep(5)
 
-        submission_name = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[1]/div/div[2]",
-        ).get_attribute("innerHTML")
+        for e in range(1, 5):  # subjects
+            button_link = (
+                "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[%s]/div/div[2]/div/div[4]/div/div/div[1]"
+                % str(e)
+            )
+            data_link = (
+                "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[%s]/div/div[2]/div/div[4]/div/div[2]"
+                % str(e)
+            )
+            self.browser.find_element(By.XPATH, button_link).click()
+            time.sleep(5)
+            print("opened data")
+            test = self.browser.find_element(By.XPATH, data_link).get_attribute(
+                "innerHTML"
+            )
+            print("scraped data")
+            time.sleep(1)
 
-        parsed_data = soup(submission_name, "html.parser")
+            test = soup(test, "html.parser")
+            test = test.text.replace("Created with Highstock 4.2.6", " ")
+            marks_db[str(e)] = test
 
-        return parsed_data.text
+        return marks_db
 
 
+#
 # extremely messy, needs to be fixed up.
