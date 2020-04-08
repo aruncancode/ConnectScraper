@@ -5,3 +5,4 @@ connect_scraper.egg-info
 test.db
 users.db
 tests/__pycache__
+debug.log

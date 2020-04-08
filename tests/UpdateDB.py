@@ -27,31 +27,63 @@ class UpdateDatabase:
     def update_notices(self, dict):
 
         with self.conn:
+
             self.c.execute(
-                "INSERT INTO Notices VALUES (:title, :body, :date, :person)",
-                {
-                    "title": dict["Title"],
-                    "body": dict["Body"],
-                    "date": dict["Date"],
-                    "person": dict["Person"],
-                },
+                "SELECT * FROM Notices WHERE (title=? AND body=? AND date=? AND person=? AND class=?)",
+                (
+                    dict["Title"],
+                    dict["Body"],
+                    dict["Date"],
+                    dict["Person"],
+                    dict["Subject"],
+                ),
             )
+            entry = self.c.fetchone()
+
+            if entry is None:
+                self.c.execute(
+                    "INSERT INTO Notices VALUES (:title, :body, :date, :person, :class)",
+                    {
+                        "title": dict["Title"],
+                        "body": dict["Body"],
+                        "date": dict["Date"],
+                        "person": dict["Person"],
+                        "class": dict["Subject"],
+                    },
+                )
 
     def update_submissions(self, dict):
 
         with self.conn:
+
             self.c.execute(
-                "INSERT INTO Submissions VALUES (:title, :body, :date, :due_date, :class, :status, :person)",
-                {
-                    "title": dict["Title"],
-                    "body": dict["Body"],
-                    "date": dict["Date"],
-                    "due_date": dict["Due Date"],
-                    "class": dict["Class"],
-                    "status": dict["Status"],
-                    "person": dict["Person"],
-                },
+                "SELECT * FROM Submissions WHERE (title=? AND body=? AND date=? AND due_date=? AND class=? AND status=? AND person=?)",
+                (
+                    dict["Title"],
+                    dict["Body"],
+                    dict["Date"],
+                    dict["Due Date"],
+                    dict["Class"],
+                    dict["Status"],
+                    dict["Person"],
+                ),
             )
+            entry = self.c.fetchone()
+
+            if entry is None:
+
+                self.c.execute(
+                    "INSERT INTO Submissions VALUES (:title, :body, :date, :due_date, :class, :status, :person)",
+                    {
+                        "title": dict["Title"],
+                        "body": dict["Body"],
+                        "date": dict["Date"],
+                        "due_date": dict["Due Date"],
+                        "class": dict["Class"],
+                        "status": dict["Status"],
+                        "person": dict["Person"],
+                    },
+                )
 
     # def update_marks(self, dict):
 
@@ -68,5 +100,3 @@ class UpdateDatabase:
     #                 'person': dict['Person']
     #             },
     #         )
-
-    # I DON"T KNOW HOW TO GET THE MARKS COZ OF THE DROP DOWN; DM ME
