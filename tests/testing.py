@@ -1,29 +1,13 @@
-from UpdateDB import UpdateDatabase
-from connect_scraper import ConnectScraper
-import sqlite3, time, json
+from connect_api import ConnectApi
+import json
+import time
 
-# conn = sqlite3.connect("users.db")
-# c = conn.cursor()
-# c.execute("SELECT username, password FROM Users")
-# result_set = c.fetchall()
-# c.close()
+f = open("sensitiveInfo.json", "r")
+sensitiveInfo = json.loads(f.read())
+f.close()
 
-result_set = [("arun.arjunan", "none")]
-
-for username, password in result_set:
-    connect = ConnectScraper(username, password, headless=True)
-    connect.login()
-    time.sleep(2)
-
-    # notices = connect.get_notices()
-    # submissions = connect.get_submissions()
-    marks = connect.get_marks()
-    print(marks)
-
-    # db = UpdateDatabase("users.db")
-    # db.update_notices(notices)
-    # time.sleep(1)
-    # db.update_submissions(submissions)
-
-# db = UpdateDatabase('users.db')
-# db.add_user('INSERT NAME', 'LAST NAME', "USERNAME (CONNECT)" , "PASSWORD")
+connect = ConnectApi(
+    sensitiveInfo["username"], sensitiveInfo["password"], headless=False
+)
+connect.login()
+time.sleep(2)
