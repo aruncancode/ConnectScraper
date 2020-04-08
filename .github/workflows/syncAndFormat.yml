@@ -20,16 +20,16 @@ jobs:
           pip install pipenv
           pipenv install --deploy --dev
 
-      - name: Config git.
+      - name: Config git
         run: |
           git config --global user.name github-actions
           git config --global user.email '${GITHUB_ACTOR}@users.noreply.github.com'
 
-      - name: Sync setup.py and commit it.
+      - name: Sync setup.py
         run: |
           pipenv run sync-setup
 
-      - name: Format and commit python files.
+      - name: Format python files
         if: always()
         run: |
           pipenv run format
@@ -38,3 +38,4 @@ jobs:
         if: always()
         with:
           commit_message: Auto Github Action Changes
+          commit_author: Github Actions <actions@github.com>
