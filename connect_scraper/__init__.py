@@ -1,10 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup as soup
-import time
-from datetime import date
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 CHROME_DRIVER_PATH = None
+HOMEPAGE_LINK = "https://connect.det.wa.edu.au/group/students/ui/overview"
+CLASSES_LINK = "https://connect.det.wa.edu.au/group/students/ui/classes"
+BASE_CLASS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/"
+BASE_SUBMISSIONS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/submissions?coisp=DomainSchoolClass:"
+BASE_ANNOUNCMENT_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/announcements?coisp=DomainSchoolClass:"
+PROFILE_LINK = (
+    "https://connect.det.wa.edu.au/group/students/ui/my-settings/profile"
+)
+ASSESSMENT_OUTLINES_LINK = "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"
 
 
 class ConnectScraper:
@@ -16,9 +24,6 @@ class ConnectScraper:
 
         self.__username = username
         self.__password = password
-        self.current_date = str(
-            date.today()
-        )  # i can't be bothered doing the self.__ thing
 
         global CHROME_DRIVER_PATH
 
@@ -42,7 +47,7 @@ class ConnectScraper:
             self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH)
 
     def login(self):
-        self.browser.get("https://connect.det.wa.edu.au/")
+        self.browser.get(HOMEPAGE_LINK)
         usernameBox = self.browser.find_element(By.ID, "ssousername")
         usernameBox.send_keys(self.__username)
         passwordBox = self.browser.find_element(By.ID, "password")
@@ -51,106 +56,63 @@ class ConnectScraper:
         checkBox.click()
         loginButton = self.browser.find_element(By.ID, "login")
         loginButton.click()
-
-    def get_notices(self):
-        temp_db = {}
-        notice_btn = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div[1]/div[1]/div/div/div[3]/section/div/div[2]/div/div/div/div[2]/div/div[1]/div[2]/span/span",
+        # The homepage has loaded enough that we know
+        # we've succesfully logged in.
+        WebDriverWait(self.browser, 10).until(
+            EC.url_contains("connect.det.wa.edu.au")
         )
-        notice_btn.click()
-        time.sleep(1)
+        return
 
-        event_title = self.browser.find_element(
-            By.XPATH,
-            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[1]',
-        ).get_attribute("innerHTML")
+    def isLoggedIn(self, url: str) -> bool:
+        if not isinstance(url, str):
+            raise TypeError("url parameter must a string!")
 
-        event_body = self.browser.find_element(
-            By.XPATH,
-            '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[1]/div/div/div/div[2]',
-        ).get_attribute("innerHTML")
+        self.browser.get(url)
+        try:
+            WebDriverWait(self.browser, 5).until(
+                EC.url_contains("connect.det.wa.edu.au")
+            )
+        except TimeoutError:
+            return False
+        finally:
+            return True
 
-        event_body = soup(event_body, "html.parser")
-        event_title = soup(event_title, "html.parser")
+    def get(self, url: str, login=True):
+        if not self.isLoggedIn(url):
+            self.login()
+            self.browser.get(url)
 
-        temp_db["Title"] = event_title.text
-        temp_db["Body"] = " ".join(event_body.text.split())
-        temp_db["Date"] = self.current_date
-        temp_db["Person"] = self.__username
-        # have to find a way to identify which class the notice came from
+    __classes = None
 
-        return temp_db
+    from .utils.classes import getClasses
 
-    def get_submissions(self):
-        sub_db = {}
+    def getHomePage(self):
+        from .utils.homepage import HomePage
 
-        submission_name = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[1]",
-        ).get_attribute("innerHTML")
+        return HomePage(self)
 
-        submission_class = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[2]",
-        ).get_attribute("innerHTML")
-
-        submission_due_date = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[3]",
-        ).get_attribute("innerHTML")
-
-        submission_status = self.browser.find_element(
-            By.XPATH,
-            "/html/body/main/div/div[2]/div[2]/div/div[2]/div[2]/div/div/div[1]/section/div/div[2]/div/div/div/div[2]/div/div[2]/div/div/div/div[4]/div[3]",
-        ).get_attribute("innerHTML")
-        submission_status = soup(submission_status, "html.parser")
-
-        submission_body = "na"
-
-        sub_db["Title"] = submission_name
-        sub_db["Due Date"] = submission_due_date
-        sub_db["Date"] = self.current_date
-        sub_db["Status"] = submission_status.text
-        sub_db["Class"] = submission_class
-        sub_db["Body"] = submission_body
-        sub_db["Person"] = self.__username
-
-        return sub_db
-
-    def get_marks(self):
-        marks_db = {}
-
-        self.browser.get(
-            "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"
+    def getFirstName(self):
+        self.get(PROFILE_LINK)
+        firstNameXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[1]/div/div[2]/div/div'
+        WebDriverWait(self.browser, 20).until(
+            EC.presence_of_element_located((By.XPATH, firstNameXPATH))
         )
+        return self.browser.find_element(By.XPATH, firstNameXPATH,).text
 
-        time.sleep(5)
+    def getLastName(self):
+        self.get(PROFILE_LINK)
+        lastNameXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]/div/div'
+        WebDriverWait(self.browser, 20).until(
+            EC.presence_of_element_located((By.XPATH, lastNameXPATH))
+        )
+        return self.browser.find_element(By.XPATH, lastNameXPATH,).text
 
-        for e in range(1, 5):  # subjects
-            button_link = (
-                "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[%s]/div/div[2]/div/div[4]/div/div/div[1]"
-                % str(e)
-            )
-            data_link = (
-                "/html/body/main/div/div[2]/div/div/div/div/section/div/div[2]/div/div/div/div[2]/div[3]/div/div/div[1]/div[%s]/div/div[2]/div/div[4]/div/div[2]"
-                % str(e)
-            )
-            self.browser.find_element(By.XPATH, button_link).click()
-            time.sleep(5)
-            print("opened data")
-            test = self.browser.find_element(By.XPATH, data_link).get_attribute(
-                "innerHTML"
-            )
-            print("scraped data")
-            time.sleep(1)
+    def getEmail(self):
+        self.get(PROFILE_LINK)
+        emailXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[3]/div/div[2]/div/div'
+        WebDriverWait(self.browser, 20).until(
+            EC.presence_of_element_located((By.XPATH, emailXPATH))
+        )
+        return self.browser.find_element(By.XPATH, emailXPATH,).text
 
-            test = soup(test, "html.parser")
-            test = test.text.replace("Created with Highstock 4.2.6", " ")
-            marks_db[str(e)] = test
-
-        return marks_db
-
-
-#
-# extremely messy, needs to be fixed up.
+    from .utils.assessmentOutlines import getAssessmentOutlines

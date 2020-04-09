@@ -1,13 +1,17 @@
-from connect_api import ConnectApi
+from connect_scraper import ConnectScraper
 import json
-import time
 
 f = open("sensitiveInfo.json", "r")
 sensitiveInfo = json.loads(f.read())
 f.close()
 
-connect = ConnectApi(
+connect = ConnectScraper(
     sensitiveInfo["username"], sensitiveInfo["password"], headless=False
 )
 connect.login()
-time.sleep(2)
+
+# === TESTING ===
+out = connect.getHomePage().getNextSubmissions()
+# === TESTING ===
+
+pass  # pause before the end
