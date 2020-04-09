@@ -57,7 +57,7 @@ def getClasses(self, update=False) -> [Class]:
     if update:
         from .classes import Class
 
-        classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'
+        classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
 
         def loadClasses():
             self.get(CLASSES_LINK)

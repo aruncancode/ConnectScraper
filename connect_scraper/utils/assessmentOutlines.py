@@ -20,7 +20,7 @@ class MarksGroup:
 
 def getAssessmentOutlines(self):
     self.get(ASSESSMENT_OUTLINES_LINK)
-    groupsXPATH = '//*[@id="v-studentassessmentoutlineportlet_WAR_connectrvportlet_INSTANCE_RpxlkUYQqwjo_LAYOUT_233"]/div/div[2]/div[3]/div/div/div[1]/div'
+    groupsXPATH = '//*[@id="v-studentassessmentoutlineportlet_WAR_connectrvportlet_INSTANCE_RpxlkUYQqwjo_LAYOUT_233"]/div/div[2]/div[3]/div/div/div[1]/div'  # noqa
     WebDriverWait(self.browser, 30).until(
         EC.presence_of_element_located((By.XPATH, groupsXPATH))
     )

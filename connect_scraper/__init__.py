@@ -7,12 +7,12 @@ CHROME_DRIVER_PATH = None
 HOMEPAGE_LINK = "https://connect.det.wa.edu.au/group/students/ui/overview"
 CLASSES_LINK = "https://connect.det.wa.edu.au/group/students/ui/classes"
 BASE_CLASS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/"
-BASE_SUBMISSIONS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/submissions?coisp=DomainSchoolClass:"
-BASE_ANNOUNCMENT_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/announcements?coisp=DomainSchoolClass:"
+BASE_SUBMISSIONS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/submissions?coisp=DomainSchoolClass:"  # noqa
+BASE_ANNOUNCMENT_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/announcements?coisp=DomainSchoolClass:"  # noqa
 PROFILE_LINK = (
     "https://connect.det.wa.edu.au/group/students/ui/my-settings/profile"
 )
-ASSESSMENT_OUTLINES_LINK = "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"
+ASSESSMENT_OUTLINES_LINK = "https://connect.det.wa.edu.au/group/students/ui/my-settings/assessment-outlines"  # noqa
 
 
 class ConnectScraper:
@@ -93,7 +93,7 @@ class ConnectScraper:
 
     def getFirstName(self):
         self.get(PROFILE_LINK)
-        firstNameXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[1]/div/div[2]/div/div'
+        firstNameXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[1]/div/div[2]/div/div'  # noqa
         WebDriverWait(self.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, firstNameXPATH))
         )
@@ -101,7 +101,7 @@ class ConnectScraper:
 
     def getLastName(self):
         self.get(PROFILE_LINK)
-        lastNameXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]/div/div'
+        lastNameXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[2]/div/div[2]/div/div'  # noqa
         WebDriverWait(self.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, lastNameXPATH))
         )
@@ -109,7 +109,7 @@ class ConnectScraper:
 
     def getEmail(self):
         self.get(PROFILE_LINK)
-        emailXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[3]/div/div[2]/div/div'
+        emailXPATH = '//*[@id="v-profileportlet_WAR_connectrvportlet_INSTANCE_rGfEXr1VmpqE_LAYOUT_228"]/div/div[2]/div/div[2]/div/div/div/div[2]/div[3]/div/div[2]/div/div'  # noqa
         WebDriverWait(self.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, emailXPATH))
         )
