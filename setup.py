@@ -23,7 +23,7 @@ setup(
         "urllib3==1.25.8",
         "websockets==8.1",
         "yarl==1.4.2",
-        "zope.interface==5.0.2",
+        "zope.interface==5.1.0",
     ],
     name="connect_scraper",
     version="0.0.1",
