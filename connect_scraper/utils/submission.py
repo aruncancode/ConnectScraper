@@ -1,7 +1,7 @@
 from .. import BASE_SUBMISSIONS_LINK, webdriver, By
 from selenium.common.exceptions import NoSuchElementException
-from datetime import datetime, timezone
 import hashlib
+from datetime import datetime
 
 
 class Submission:
@@ -36,7 +36,7 @@ class Submission:
     def scrape(browser: webdriver.Chrome):
         submissionBox = browser.find_element(
             By.XPATH,
-            '//*[@id="v-submissionportlet_WAR_connectrvportlet_INSTANCE_IQdBhuiMMrFp_LAYOUT_248"]/div/div[2]/div[3]/div/div[2]',
+            '//*[@id="v-submissionportlet_WAR_connectrvportlet_INSTANCE_IQdBhuiMMrFp_LAYOUT_248"]/div/div[2]/div[3]/div/div[2]',  # noqa
         )
         classId = int(
             browser.current_url.replace(BASE_SUBMISSIONS_LINK, "").split("&")[0]

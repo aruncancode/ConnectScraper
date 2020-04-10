@@ -63,7 +63,8 @@ class HomePage:
         return Notice(title, author, authorType, rawBody, views, time, link)
 
     def getNextSubmissions(self):
-        # TODO: Make this much cleaner. Check if this works for 0 < no. of submissions < 3
+        # TODO: Make this much cleaner. Check if this works for
+        #       0 < no. of submissions < 3
         submissionsBoxXPATH = '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div'  # noqa
         WebDriverWait(self.__parent.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, submissionsBoxXPATH))
