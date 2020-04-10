@@ -31,6 +31,7 @@ class Notice:
 
     @staticmethod
     def parseTime(timeStr: str) -> datetime:
+        # TODO: parse time
         pass
 
     # TODO: parse rawBody

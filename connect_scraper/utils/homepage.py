@@ -59,6 +59,7 @@ class HomePage:
         )
         link = self.__parent.browser.current_url.split("#")[0]
         self.__goToHomePage()
+        # TODO: Add capability to download attachments.
         return Notice(title, author, authorType, rawBody, views, time, link)
 
     def getNextSubmissions(self):

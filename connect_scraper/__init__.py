@@ -32,10 +32,20 @@ class ConnectScraper:
 
             CHROME_DRIVER_PATH = chromedriver_autoinstaller.install()
 
-        if headless:
-            from selenium.webdriver.chrome.options import Options
+        from selenium.webdriver.chrome.options import Options
+        import os
 
-            options = Options()
+        options = Options()
+        options.add_experimental_option(
+            "prefs",
+            {
+                "download.default_directory": os.path.abspath("downloads"),
+                "download.prompt_for_download": False,
+                "download.directory_upgrade": True,
+                "safebrowsing.enabled": True,
+            },
+        )
+        if headless:
             options.add_argument("--disable-gpu")
             options.add_argument("--headless")
             options.add_argument("--hide-scrollbars")
