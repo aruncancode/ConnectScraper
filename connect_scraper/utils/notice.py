@@ -11,7 +11,7 @@ class Notice:
         rawBody: str,
         views: str,
         time: datetime,
-        link: str,
+        classID: int,
     ):
         self.__title = title
         self.__author = author
@@ -19,15 +19,17 @@ class Notice:
         self.__rawBody = rawBody
         self.__views = views
         self.__time = time
-        self.__link = link
-        self.__classID = int(
-            self.__link.replace(BASE_ANNOUNCMENT_LINK, "").split("&")[0]
-        )
-        self.__id = int(
-            self.__link.replace(
-                BASE_ANNOUNCMENT_LINK + str(self.__classID) + "&viewNotice=", ""
-            )
-        )
+        self.__classID = classID
+        self.__hashID = hash(str(self.__classID) + str(self.__title))
+
+    classID = property(lambda self: self.__classID)
+    title = property(lambda self: self.__title)
+    author = property(lambda self: self.__author)
+    authorType = property(lambda self: self.__authorType)
+    views = property(lambda self: self.__views)
+    rawBody = property(lambda self: self.__rawBody)
+    hashID = property(lambda self: self.__hashID)
+    time = property(lambda self: self.__time)
 
     @staticmethod
     def parseTime(timeStr: str) -> datetime:

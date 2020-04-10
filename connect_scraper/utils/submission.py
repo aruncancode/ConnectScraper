@@ -20,9 +20,7 @@ class Submission:
         self.__status = status
         self.__isOpen = isOpen
         self.__rawBody = rawBody
-        self.__hashID = hashlib.sha1(
-            (str(self.__classID) + str(self.__title)).encode()
-        ).hexdigest()
+        self.__hashID = hash(str(self.__classID) + str(self.__title))
 
     classId = property(lambda self: self.__classID)
     title = property(lambda self: self.__title)
@@ -67,7 +65,3 @@ class Submission:
             By.XPATH, "./div[6]",
         ).get_attribute("innerHTML")
         return Submission(classId, title, dueDate, status, isOpen, rawBody)
-
-    @property
-    def dueDateISOFormat(self):
-        return self.dueDate.isoformat()

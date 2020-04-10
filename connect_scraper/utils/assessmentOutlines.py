@@ -10,12 +10,36 @@ class Mark:
         self.__rawScore = rawScore
         self.__weightedMark = weightedMark
 
+    name = property(lambda self: self.__name)
+    rawScore = property(lambda self: self.__rawScore)
+    weightedMark = property(lambda self: self.__weightedMark)
+
+    @staticmethod
+    def ser(pair):
+        return f"{str(pair[0])}/{str(pair[1])}"
+
+    @staticmethod
+    def deser(str):
+        def convrt(n):
+            if n == "None":
+                return None
+            else:
+                return float(n)
+
+        return list(map(convrt, str.split("/")))
+
 
 class MarksGroup:
     def __init__(self, name: str, teacher: str, obj):
         self.__name = name
         self.__teacher = teacher
         self.__obj = obj
+        self.__hashID = hash(self.__name + self.__teacher + self.__obj)
+
+    name = property(lambda self: self.__name)
+    teacher = property(lambda self: self.__teacher)
+    obj = property(lambda self: self.__obj)
+    hashID = property(lambda self: self.__hashID)
 
 
 def getAssessmentOutlines(self):

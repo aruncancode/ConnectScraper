@@ -17,7 +17,6 @@ class Class:
             )
         )
 
-    parent = property(lambda self: self.__parent)
     name = property(lambda self: self.__name)
     room = property(lambda self: self.__room)
     locked = property(lambda self: self.__locked)

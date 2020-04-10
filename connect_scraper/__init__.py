@@ -17,11 +17,6 @@ ASSESSMENT_OUTLINES_LINK = "https://connect.det.wa.edu.au/group/students/ui/my-s
 
 class ConnectScraper:
     def __init__(self, username: str, password: str, *, headless=True):
-        if not isinstance(username, str):
-            raise TypeError("The username parameter must be a string.")
-        if not isinstance(password, str):
-            raise TypeError("The password parameter must be a string.")
-
         self.__username = username
         self.__password = password
 
@@ -74,9 +69,6 @@ class ConnectScraper:
         return
 
     def isLoggedIn(self, url: str) -> bool:
-        if not isinstance(url, str):
-            raise TypeError("url parameter must a string!")
-
         self.browser.get(url)
         try:
             WebDriverWait(self.browser, 5).until(

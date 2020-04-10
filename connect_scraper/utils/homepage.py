@@ -1,4 +1,4 @@
-from .. import HOMEPAGE_LINK, By, WebDriverWait, EC
+from .. import HOMEPAGE_LINK, By, WebDriverWait, EC, BASE_ANNOUNCMENT_LINK
 from datetime import datetime
 
 
@@ -57,7 +57,11 @@ class HomePage:
                 "https://connect.det.wa.edu.au/group/students/ui/class/announcements"  # noqa
             )
         )
-        link = self.__parent.browser.current_url.split("#")[0]
+        link = int(
+            self.__parent.browser.current_url.split("#")[0]
+            .replace(BASE_ANNOUNCMENT_LINK, "")
+            .split("&")[0]
+        )
         self.__goToHomePage()
         # TODO: Add capability to download attachments.
         return Notice(title, author, authorType, rawBody, views, time, link)
