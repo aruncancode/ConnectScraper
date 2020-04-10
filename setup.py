@@ -31,7 +31,7 @@ setup(
     description="An API that webscrapes Connect DET.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/aruncancode/connect-api",
+    url="https://github.com/aruncancode/ConnectScraper",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Development Status :: 3 - Alpha",
