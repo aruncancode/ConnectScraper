@@ -1,6 +1,5 @@
 from .. import BASE_SUBMISSIONS_LINK, webdriver, By
 from selenium.common.exceptions import NoSuchElementException
-import hashlib
 from datetime import datetime
 
 

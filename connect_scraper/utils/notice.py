@@ -1,5 +1,4 @@
 from datetime import datetime
-from .. import BASE_ANNOUNCMENT_LINK
 
 
 class Notice:
