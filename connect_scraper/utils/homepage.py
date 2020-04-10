@@ -104,12 +104,7 @@ class HomePage:
                     )
                 )
             )
-            submissions.append(
-                Submission(
-                    self.__parent,
-                    self.__parent.browser.current_url.split("#")[0],
-                )
-            )
+            submissions.append(Submission.scrape(self.__parent.browser))
             self.__goToHomePage()
             openMore()
 
