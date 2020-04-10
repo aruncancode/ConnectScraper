@@ -63,49 +63,67 @@ class HomePage:
         return Notice(title, author, authorType, rawBody, views, time, link)
 
     def getNextSubmissions(self):
-        # TODO: FIX This will break if you don't have three submissions coming
-        #       up.
+        # TODO: Make this much cleaner. Check if this works for 0 < no. of submissions < 3
         submissionsBoxXPATH = '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div'  # noqa
-        submissionElementsXPATH = f"{submissionsBoxXPATH}/div[2]/div/div"
-
-        def openMore():
-            WebDriverWait(self.__parent.browser, 20).until(
-                EC.presence_of_element_located((By.XPATH, submissionsBoxXPATH))
-            )
-            self.__parent.browser.find_element(
-                By.XPATH, f"{submissionsBoxXPATH}/div[1]/div[2]"
-            ).click()
-            WebDriverWait(self.__parent.browser, 5).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, f"{submissionElementsXPATH}[2]/div/div")
-                )
-            )
-
-        openMore()
+        WebDriverWait(self.__parent.browser, 20).until(
+            EC.presence_of_element_located((By.XPATH, submissionsBoxXPATH))
+        )
         submissions = []
-        from .submission import Submission
+        if not (
+            "You currently don't have any submissions due."
+            in self.__parent.browser.find_element(
+                By.XPATH, submissionsBoxXPATH
+            ).text
+        ):
+            submissionElementsXPATH = f"{submissionsBoxXPATH}/div[2]/div/div"
 
-        for i in range(2, 5):
-            self.__parent.browser.find_element(
-                By.XPATH, f"{submissionElementsXPATH}[{i}]/div/div"
-            ).click()
-            viewButtonXPATH = '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[2]'  # noqa
-            WebDriverWait(self.__parent.browser, 5).until(
-                EC.presence_of_element_located((By.XPATH, viewButtonXPATH))
-            )
-            self.__parent.browser.find_element(
-                By.XPATH, viewButtonXPATH
-            ).click()
-            WebDriverWait(self.__parent.browser, 20).until(
-                EC.presence_of_element_located(
-                    (
-                        By.XPATH,
-                        '//*[@id="v-submissionportlet_WAR_connectrvportlet_INSTANCE_IQdBhuiMMrFp_LAYOUT_248"]/div/div[2]/div[3]/div/div[2]/div[1]',  # noqa
+            def openMore():
+                WebDriverWait(self.__parent.browser, 20).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, submissionsBoxXPATH)
                     )
                 )
-            )
-            submissions.append(Submission.scrape(self.__parent.browser))
-            self.__goToHomePage()
+                self.__parent.browser.find_element(
+                    By.XPATH, f"{submissionsBoxXPATH}/div[1]/div[2]"
+                ).click()
+                WebDriverWait(self.__parent.browser, 5).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, f"{submissionElementsXPATH}/div/div")
+                    )
+                )
+
             openMore()
+            from .submission import Submission
+
+            for i in range(
+                2,
+                len(
+                    self.__parent.browser.find_elements(
+                        By.XPATH, f"{submissionElementsXPATH}/div/div"
+                    )
+                )
+                + 1,
+            ):
+                self.__parent.browser.find_element(
+                    By.XPATH, f"{submissionElementsXPATH}[{i}]/div/div"
+                ).click()
+                viewButtonXPATH = '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215-overlays"]/div[3]/div/div/div[3]/div/div/div[2]'  # noqa
+                WebDriverWait(self.__parent.browser, 5).until(
+                    EC.presence_of_element_located((By.XPATH, viewButtonXPATH))
+                )
+                self.__parent.browser.find_element(
+                    By.XPATH, viewButtonXPATH
+                ).click()
+                WebDriverWait(self.__parent.browser, 20).until(
+                    EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            '//*[@id="v-submissionportlet_WAR_connectrvportlet_INSTANCE_IQdBhuiMMrFp_LAYOUT_248"]/div/div[2]/div[3]/div/div[2]/div[1]',  # noqa
+                        )
+                    )
+                )
+                submissions.append(Submission.scrape(self.__parent.browser))
+                self.__goToHomePage()
+                openMore()
 
         return submissions
