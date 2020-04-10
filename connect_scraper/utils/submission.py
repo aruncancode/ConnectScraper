@@ -30,7 +30,7 @@ class Submission:
     status = property(lambda self: self.__status)
     isOpen = property(lambda self: self.__isOpen)
     rawBody = property(lambda self: self.__rawBody)
-    hashId = property(lambda self: self.__hashID)
+    hashID = property(lambda self: self.__hashID)
 
     @staticmethod
     def scrape(browser: webdriver.Chrome):
