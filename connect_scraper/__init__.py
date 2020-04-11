@@ -51,6 +51,9 @@ class ConnectScraper:
         else:
             self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH)
 
+    def __del__(self):
+        self.browser.quit()
+
     def login(self):
         self.browser.get(HOMEPAGE_LINK)
         usernameBox = self.browser.find_element(By.ID, "ssousername")
