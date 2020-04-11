@@ -10,9 +10,17 @@ class Mark:
         self.__rawScore = rawScore
         self.__weightedMark = weightedMark
 
-    name = property(lambda self: self.__name)
-    rawScore = property(lambda self: self.__rawScore)
-    weightedMark = property(lambda self: self.__weightedMark)
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def rawScore(self):
+        return self.__rawScore
+
+    @property
+    def weightedMark(self):
+        return self.__weightedMark
 
     @staticmethod
     def ser(pair):
@@ -30,16 +38,27 @@ class Mark:
 
 
 class MarksGroup:
-    def __init__(self, name: str, teacher: str, obj):
+    def __init__(self, name: str, teacher: str, marks: dict):
         self.__name = name
         self.__teacher = teacher
-        self.__obj = obj
+        self.__marks = marks
         self.__hashID = hash(self.__name + self.__teacher + self.__obj)
 
-    name = property(lambda self: self.__name)
-    teacher = property(lambda self: self.__teacher)
-    obj = property(lambda self: self.__obj)
-    hashID = property(lambda self: self.__hashID)
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def teacher(self):
+        return self.__teacher
+
+    @property
+    def marks(self):
+        return self.__marks
+
+    @property
+    def hashID(self):
+        return self.__hashID
 
 
 def getAssessmentOutlines(self):

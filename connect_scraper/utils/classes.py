@@ -17,11 +17,25 @@ class Class:
             )
         )
 
-    name = property(lambda self: self.__name)
-    room = property(lambda self: self.__room)
-    locked = property(lambda self: self.__locked)
-    link = property(lambda self: self.__link)
-    ID = property(lambda self: self.__id)
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def room(self):
+        return self.__room
+
+    @property
+    def locked(self):
+        return self.__locked
+
+    @property
+    def link(self):
+        return self.__link
+
+    @property
+    def ID(self):
+        return self.__id
 
     # TODO: make some methods
 

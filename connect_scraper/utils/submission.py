@@ -21,13 +21,33 @@ class Submission:
         self.__rawBody = rawBody
         self.__hashID = hash(str(self.__classID) + str(self.__title))
 
-    classId = property(lambda self: self.__classID)
-    title = property(lambda self: self.__title)
-    dueDate = property(lambda self: self.__dueDate)
-    status = property(lambda self: self.__status)
-    isOpen = property(lambda self: self.__isOpen)
-    rawBody = property(lambda self: self.__rawBody)
-    hashID = property(lambda self: self.__hashID)
+    @property
+    def classID(self):
+        return self.__classID
+
+    @property
+    def title(self):
+        return self.__title
+
+    @property
+    def dueDate(self):
+        return self.__dueDate
+
+    @property
+    def status(self):
+        return self.__status
+
+    @property
+    def isOpen(self):
+        return self.__isOpen
+
+    @property
+    def rawBody(self):
+        return self.__rawBody
+
+    @property
+    def hashID(self):
+        return self.__hashID
 
     @staticmethod
     def scrape(browser: webdriver.Chrome):

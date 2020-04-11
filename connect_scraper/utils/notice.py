@@ -21,14 +21,37 @@ class Notice:
         self.__classID = classID
         self.__hashID = hash(str(self.__classID) + str(self.__title))
 
-    classID = property(lambda self: self.__classID)
-    title = property(lambda self: self.__title)
-    author = property(lambda self: self.__author)
-    authorType = property(lambda self: self.__authorType)
-    views = property(lambda self: self.__views)
-    rawBody = property(lambda self: self.__rawBody)
-    hashID = property(lambda self: self.__hashID)
-    time = property(lambda self: self.__time)
+    @property
+    def classID(self):
+        return self.__classID
+
+    @property
+    def title(self):
+        return self.__title
+
+    @property
+    def author(self):
+        return self.__author
+
+    @property
+    def authorType(self):
+        return self.__author
+
+    @property
+    def views(self):
+        return self.__views
+
+    @property
+    def rawBody(self):
+        return self.__rawBody
+
+    @property
+    def hashID(self):
+        return self.__hashID
+
+    @property
+    def time(self):
+        return self.__time
 
     @staticmethod
     def parseTime(timeStr: str) -> datetime:

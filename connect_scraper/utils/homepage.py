@@ -11,7 +11,9 @@ class HomePage:
     def __goToHomePage(self):
         self.__parent.get(HOMEPAGE_LINK)
 
-    lastUpdate = property(lambda self: self.__lastUpdate)
+    @property
+    def lastUpdate(self):
+        return self.__lastUpdate
 
     def getLatestNotice(self):
         readButtonXPATH = '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215"]/div/div[2]/div/div[1]/div[2]/span/span'  # noqa
