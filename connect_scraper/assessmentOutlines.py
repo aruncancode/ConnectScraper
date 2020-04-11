@@ -1,4 +1,4 @@
-from .. import ASSESSMENT_OUTLINES_LINK, By, WebDriverWait, EC
+from . import ASSESSMENT_OUTLINES_LINK
 import time
 
 

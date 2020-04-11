@@ -1,4 +1,4 @@
-from .. import WebDriverWait, EC, By, CLASSES_LINK, BASE_CLASS_LINK
+from . import CLASSES_LINK, BASE_CLASS_LINK
 from datetime import datetime
 
 
@@ -68,7 +68,6 @@ class Classes:
 
 def getClasses(self, update=False) -> [Class]:
     if update:
-        from .classes import Class
 
         classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
 

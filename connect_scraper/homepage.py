@@ -1,5 +1,10 @@
-from .. import HOMEPAGE_LINK, By, WebDriverWait, EC, BASE_ANNOUNCMENT_LINK
+from . import HOMEPAGE_LINK, BASE_ANNOUNCMENT_LINK
+from .notice import Notice
 from datetime import datetime
+from .submission import Submission
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class HomePage:
@@ -44,8 +49,6 @@ class HomePage:
                 "./div[2]/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div[2]",
             ).text
         )
-        from .notice import Notice
-
         time = Notice.parseTime(
             body.find_element(
                 By.XPATH, "./div[2]/div[1]/div[2]/div/div[1]/div[1]/div[3]",
@@ -100,7 +103,6 @@ class HomePage:
                 )
 
             openMore()
-            from .submission import Submission
 
             for i in range(
                 2,

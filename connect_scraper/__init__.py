@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+import os
+from .homepage import HomePage
 
 CHROME_DRIVER_PATH = None
 HOMEPAGE_LINK = "https://connect.det.wa.edu.au/group/students/ui/overview"
@@ -26,9 +29,6 @@ class ConnectScraper:
             import chromedriver_autoinstaller
 
             CHROME_DRIVER_PATH = chromedriver_autoinstaller.install()
-
-        from selenium.webdriver.chrome.options import Options
-        import os
 
         options = Options()
         options.add_experimental_option(
@@ -89,10 +89,9 @@ class ConnectScraper:
 
     __classes = None
 
-    from .utils.classes import getClasses
+    from .classes import getClasses
 
     def getHomePage(self):
-        from .utils.homepage import HomePage
 
         return HomePage(self)
 
@@ -120,4 +119,4 @@ class ConnectScraper:
         )
         return self.browser.find_element(By.XPATH, emailXPATH,).text
 
-    from .utils.assessmentOutlines import getAssessmentOutlines
+    from .assessmentOutlines import getAssessmentOutlines

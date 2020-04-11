@@ -1,6 +1,8 @@
-from .. import BASE_SUBMISSIONS_LINK, webdriver, By
+from . import BASE_SUBMISSIONS_LINK
 from selenium.common.exceptions import NoSuchElementException
+from selenium import webdriver
 from datetime import datetime
+from selenium.webdriver.common.by import By
 
 
 class Submission:
