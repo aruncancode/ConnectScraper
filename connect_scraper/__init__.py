@@ -4,7 +4,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
-from .homepage import HomePage
 
 CHROME_DRIVER_PATH = None
 HOMEPAGE_LINK = "https://connect.det.wa.edu.au/group/students/ui/overview"
@@ -92,6 +91,7 @@ class ConnectScraper:
     from .classes import getClasses
 
     def getHomePage(self):
+        from .homepage import HomePage
 
         return HomePage(self)
 
