@@ -1,5 +1,8 @@
 from . import ASSESSMENT_OUTLINES_LINK
 import time
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class Mark:

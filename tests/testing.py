@@ -11,7 +11,7 @@ connect = ConnectScraper(
 connect.login()
 
 # === TESTING ===
-out = connect.getHomePage().getNextSubmissions()
+out = connect.homePage.getNextSubmissions()
 # === TESTING ===
 
 pass  # pause before the end

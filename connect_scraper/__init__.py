@@ -88,9 +88,10 @@ class ConnectScraper:
 
     __classes = None
 
-    from .classes import getClasses
+    from .classes import classses
 
-    def getHomePage(self):
+    @property
+    def homePage(self):
         from .homepage import HomePage
 
         return HomePage(self)

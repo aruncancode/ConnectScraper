@@ -1,5 +1,8 @@
 from . import CLASSES_LINK, BASE_CLASS_LINK
 from datetime import datetime
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 
 class Class:
@@ -66,7 +69,8 @@ class Classes:
         return None
 
 
-def getClasses(self, update=False) -> [Class]:
+@property
+def classses(self, update=False) -> [Class]:
     if update:
 
         classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
