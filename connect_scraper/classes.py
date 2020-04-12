@@ -1,5 +1,6 @@
 from . import CLASSES_LINK, BASE_CLASS_LINK
 from datetime import datetime
+from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -7,9 +8,15 @@ from selenium.webdriver.common.by import By
 
 class Class:
     def __init__(
-        self, parent, *, name: str, room: str, locked: bool, link: str,
+        self,
+        browser: webdriver,
+        *,
+        name: str,
+        room: str,
+        locked: bool,
+        link: str,
     ):
-        self.__parent = parent
+        self.__browser = browser
         self.__name = name
         self.__room = room
         self.__locked = locked
@@ -19,6 +26,10 @@ class Class:
                 BASE_CLASS_LINK + "summary?coisp=DomainSchoolClass:", ""
             )
         )
+
+    @property
+    def browser(self):
+        return self.__browser
 
     @property
     def name(self):
@@ -48,6 +59,59 @@ class Classes:
         self.__list = classes
         self.__lastUpdate = datetime.now()
 
+    @staticmethod
+    def update(parent):
+        classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
+
+        def loadClasses():
+            parent.get(CLASSES_LINK)
+            WebDriverWait(parent.browser, 30).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, classGroupXPATH + "[1]",)
+                )
+            )
+
+        loadClasses()
+        noOfClasses = len(
+            parent.browser.find_elements(By.XPATH, classGroupXPATH,)
+        )
+        classes = []
+        i = 1
+        while i <= noOfClasses:
+            clss = parent.browser.find_element(
+                By.XPATH, f"{classGroupXPATH}[{i}]/div[1]",
+            )
+            raw = clss.text.split("\n")
+            room = None if len(raw) == 2 else raw[1]
+            locked = (
+                False
+                if "unlocked" in raw[1 if room is None else 2].lower()
+                else True
+            )
+            clss.find_element(By.XPATH, "./div[2]/div[1]").click()
+            WebDriverWait(parent.browser, 30).until(
+                EC.url_contains(BASE_CLASS_LINK)
+            )
+            link = (
+                BASE_CLASS_LINK
+                + "summary?coisp=DomainSchoolClass:"
+                + parent.browser.current_url.split("#")[0]
+                .replace(BASE_CLASS_LINK, "")
+                .split(":")[1]
+            )
+            classes.append(
+                Class(
+                    parent.browser,
+                    name=raw[0],
+                    room=room,
+                    locked=locked,
+                    link=link,
+                )
+            )
+            loadClasses()
+            i += 1
+        return Classes(classes)
+
     @property
     def list(self):
         return self.__list
@@ -67,54 +131,3 @@ class Classes:
             if clss.id == id:
                 return clss
         return None
-
-
-def getClassses(self, update=False) -> Classes:
-    if update:
-
-        classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
-
-        def loadClasses():
-            self.get(CLASSES_LINK)
-            WebDriverWait(self.browser, 30).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, classGroupXPATH + "[1]",)
-                )
-            )
-
-        loadClasses()
-        noOfClasses = len(
-            self.browser.find_elements(By.XPATH, classGroupXPATH,)
-        )
-        classes = []
-        i = 1
-        while i <= noOfClasses:
-            clss = self.browser.find_element(
-                By.XPATH, f"{classGroupXPATH}[{i}]/div[1]",
-            )
-            raw = clss.text.split("\n")
-            room = None if len(raw) == 2 else raw[1]
-            locked = (
-                False
-                if "unlocked" in raw[1 if room is None else 2].lower()
-                else True
-            )
-            clss.find_element(By.XPATH, "./div[2]/div[1]").click()
-            WebDriverWait(self.browser, 30).until(
-                EC.url_contains(BASE_CLASS_LINK)
-            )
-            link = (
-                BASE_CLASS_LINK
-                + "summary?coisp=DomainSchoolClass:"
-                + self.browser.current_url.split("#")[0]
-                .replace(BASE_CLASS_LINK, "")
-                .split(":")[1]
-            )
-            classes.append(
-                Class(self, name=raw[0], room=room, locked=locked, link=link,)
-            )
-            loadClasses()
-            i += 1
-        self.__classes = Classes(classes)
-
-    return self.__classes
