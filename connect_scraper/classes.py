@@ -8,15 +8,9 @@ from selenium.webdriver.common.by import By
 
 class Class:
     def __init__(
-        self,
-        browser: webdriver,
-        *,
-        name: str,
-        room: str,
-        locked: bool,
-        link: str,
+        self, parent, *, name: str, room: str, locked: bool, link: str,
     ):
-        self.__browser = browser
+        self.__parent = parent
         self.__name = name
         self.__room = room
         self.__locked = locked
@@ -28,8 +22,8 @@ class Class:
         )
 
     @property
-    def browser(self):
-        return self.__browser
+    def parent(self):
+        return self.__parent
 
     @property
     def name(self):
@@ -48,7 +42,7 @@ class Class:
         return self.__link
 
     @property
-    def ID(self):
+    def id(self):
         return self.__id
 
     # TODO: make some methods
