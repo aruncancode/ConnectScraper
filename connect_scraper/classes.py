@@ -69,8 +69,7 @@ class Classes:
         return None
 
 
-@property
-def classses(self, update=False) -> [Class]:
+def getClassses(self, update=False) -> [Class]:
     if update:
 
         classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
