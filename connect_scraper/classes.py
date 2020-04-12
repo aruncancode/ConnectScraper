@@ -69,7 +69,7 @@ class Classes:
         return None
 
 
-def getClassses(self, update=False) -> [Class]:
+def getClassses(self, update=False) -> Classes:
     if update:
 
         classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
@@ -115,6 +115,6 @@ def getClassses(self, update=False) -> [Class]:
             )
             loadClasses()
             i += 1
-        self.__classes = classes
+        self.__classes = Classes(classes)
 
     return self.__classes
