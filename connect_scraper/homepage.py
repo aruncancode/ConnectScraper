@@ -21,7 +21,7 @@ class HomePage:
     def lastUpdate(self):
         return self.__lastUpdate
 
-    def getLatestNotice(self) -> List[Notice]:
+    def getLatestNotice(self) -> Notice:
         readButtonXPATH = '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215"]/div/div[2]/div/div[1]/div[2]/span/span'  # noqa
         WebDriverWait(self.__parent.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, readButtonXPATH,))
