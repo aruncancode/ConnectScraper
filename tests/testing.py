@@ -1,6 +1,7 @@
 from connect_scraper import ConnectScraper
-from connect_scraper.classes import Class
 import json
+
+# from connect_scraper.classes import Class
 
 f = open("sensitiveInfo.json", "r")
 sensitiveInfo = json.loads(f.read())
