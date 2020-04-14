@@ -6,6 +6,26 @@ from selenium.webdriver.common.by import By
 from typing import Tuple
 
 
+class Score:
+    def __init__(self, tple: Tuple[float, float]):
+        self.frst = tple[0]
+        self.lst = tple[1]
+        self.tple = tple
+
+    def ser(self):
+        return f"{str(self.frst)}/{str(self.lst)}"
+
+    @staticmethod
+    def deser(str):
+        def convrt(n):
+            if n == "None":
+                return None
+            else:
+                return float(n)
+
+        return tuple(map(convrt, str.split("/")))
+
+
 class Mark:
     def __init__(
         self,
@@ -14,8 +34,8 @@ class Mark:
         weightedMark: Tuple[float, float],
     ):
         self.__name = name
-        self.__rawScore = rawScore
-        self.__weightedMark = weightedMark
+        self.__rawScore = Score(rawScore)
+        self.__weightedMark = Score(weightedMark)
 
     @property
     def name(self):
@@ -28,20 +48,6 @@ class Mark:
     @property
     def weightedMark(self):
         return self.__weightedMark
-
-    @staticmethod
-    def ser(pair):
-        return f"{str(pair[0])}/{str(pair[1])}"
-
-    @staticmethod
-    def deser(str):
-        def convrt(n):
-            if n == "None":
-                return None
-            else:
-                return float(n)
-
-        return tuple(map(convrt, str.split("/")))
 
 
 class MarksGroup:
