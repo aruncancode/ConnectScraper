@@ -1,4 +1,5 @@
 from connect_scraper import ConnectScraper
+from connect_scraper.classes import Class
 import json
 
 f = open("sensitiveInfo.json", "r")
@@ -11,7 +12,9 @@ connect = ConnectScraper(
 connect.login()
 
 # === TESTING ===
-out = connect.homePage.getNextSubmissions()
+# clss = Class(connect, name="2020 Yr 10 GATE HaSS Combined", id=1932630127)
+clss = connect.classes.update().list[2]
+out = clss.learners.teachers()
 # === TESTING ===
 
 pass  # pause before the end

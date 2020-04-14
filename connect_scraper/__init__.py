@@ -4,13 +4,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
+from .classes import Classes
 
 CHROME_DRIVER_PATH = None
 HOMEPAGE_LINK = "https://connect.det.wa.edu.au/group/students/ui/overview"
-CLASSES_LINK = "https://connect.det.wa.edu.au/group/students/ui/classes"
-BASE_CLASS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/"
-BASE_SUBMISSIONS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/submissions?coisp=DomainSchoolClass:"  # noqa
-BASE_ANNOUNCMENT_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/announcements?coisp=DomainSchoolClass:"  # noqa
 PROFILE_LINK = (
     "https://connect.det.wa.edu.au/group/students/ui/my-settings/profile"
 )
@@ -50,8 +47,20 @@ class ConnectScraper:
         else:
             self.browser = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH)
 
+        self.__classes = Classes(self)
+
     def __del__(self):
         self.browser.quit()
+
+    @property
+    def classes(self):
+        return self.__classes
+
+    @property
+    def homePage(self):
+        from .homepage import HomePage
+
+        return HomePage(self)
 
     def login(self):
         self.browser.get(HOMEPAGE_LINK)
@@ -68,7 +77,6 @@ class ConnectScraper:
         WebDriverWait(self.browser, 10).until(
             EC.url_contains("connect.det.wa.edu.au")
         )
-        return
 
     def isLoggedIn(self, url: str) -> bool:
         self.browser.get(url)
@@ -85,21 +93,6 @@ class ConnectScraper:
         if not self.isLoggedIn(url):
             self.login()
             self.browser.get(url)
-
-    __classes = None
-
-    def getClasses(self, update=False):
-        from .classes import Classes
-
-        if update:
-            self.__classes = Classes.update(self)
-        return self.__classes
-
-    @property
-    def homePage(self):
-        from .homepage import HomePage
-
-        return HomePage(self)
 
     def getFirstName(self):
         self.get(PROFILE_LINK)

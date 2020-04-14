@@ -1,29 +1,59 @@
-from . import CLASSES_LINK, BASE_CLASS_LINK
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from typing import List
+
+
+CLASSES_LINK = "https://connect.det.wa.edu.au/group/students/ui/classes"
+BASE_CLASS_LINK = "https://connect.det.wa.edu.au/group/students/ui/class/"
+
+
+class ClassPage:
+    page = None
+
+    def __init__(self, parent):
+        self.parent = parent
+        self.connect = self.parent.connect
+        self.link = self.pageLink() if self.page is not None else None
+
+    def pageLink(self) -> str:
+        return (
+            BASE_CLASS_LINK
+            + self.page
+            + "?coisp=DomainSchoolClass:"
+            + str(self.parent.id)
+        )
+
+
+class Notices(ClassPage):
+    def __init__(self, parent):
+        self.page = "announcements"
+        super().__init__(parent)
+
+
+class Submissions(ClassPage):
+    def __init__(self, parent):
+        self.page = "submissions"
+        super().__init__(parent)
 
 
 class Class:
     def __init__(
-        self, parent, *, name: str, room: str, locked: bool, link: str,
+        self,
+        connect,
+        *,
+        name: str,
+        room: str = None,
+        locked: bool = None,
+        id: int,
     ):
-        self.__parent = parent
+        self.connect = connect
         self.__name = name
         self.__room = room
         self.__locked = locked
-        self.__link = link
-        self.__id = int(
-            self.__link.replace(
-                BASE_CLASS_LINK + "summary?coisp=DomainSchoolClass:", ""
-            )
-        )
-
-    @property
-    def parent(self):
-        return self.__parent
+        self.__id = id
 
     @property
     def name(self):
@@ -45,21 +75,30 @@ class Class:
     def id(self):
         return self.__id
 
-    # TODO: make some methods
+    @property
+    def notices(self):
+        return Notices(self)
+
+    @property
+    def submissions(self):
+        return Submissions(self)
 
 
 class Classes:
-    def __init__(self, classes: [Class]):
-        self.__list = classes
-        self.__lastUpdate = datetime.now()
+    def __init__(self, connect):
+        self.connect = connect
+        self.__list = []
+        self.__lastUpdate = None
 
-    @staticmethod
-    def update(parent):
+    def __getitem__(self, key):
+        return self.__list[key]
+
+    def update(self):
         classGroupXPATH = '//*[@id="v-schoolclassmetricssummaryportlet_WAR_connectrvportlet_INSTANCE_mqpJ9Wlttawi_LAYOUT_216"]/div/div[2]/div[2]/div[1]/div'  # noqa
 
         def loadClasses():
-            parent.get(CLASSES_LINK)
-            WebDriverWait(parent.browser, 30).until(
+            self.connect.get(CLASSES_LINK)
+            WebDriverWait(self.connect.browser, 30).until(
                 EC.presence_of_element_located(
                     (By.XPATH, classGroupXPATH + "[1]",)
                 )
@@ -67,12 +106,12 @@ class Classes:
 
         loadClasses()
         noOfClasses = len(
-            parent.browser.find_elements(By.XPATH, classGroupXPATH,)
+            self.connect.browser.find_elements(By.XPATH, classGroupXPATH,)
         )
         classes = []
         i = 1
         while i <= noOfClasses:
-            clss = parent.browser.find_element(
+            clss = self.connect.browser.find_element(
                 By.XPATH, f"{classGroupXPATH}[{i}]/div[1]",
             )
             raw = clss.text.split("\n")
@@ -83,31 +122,27 @@ class Classes:
                 else True
             )
             clss.find_element(By.XPATH, "./div[2]/div[1]").click()
-            WebDriverWait(parent.browser, 30).until(
+            WebDriverWait(self.connect.browser, 30).until(
                 EC.url_contains(BASE_CLASS_LINK)
             )
-            link = (
-                BASE_CLASS_LINK
-                + "summary?coisp=DomainSchoolClass:"
-                + parent.browser.current_url.split("#")[0]
-                .replace(BASE_CLASS_LINK, "")
+            id = int(
+                self.connect.browser.current_url.replace(BASE_CLASS_LINK, "")
+                .split("#")[0]
                 .split(":")[1]
             )
             classes.append(
                 Class(
-                    parent.browser,
-                    name=raw[0],
-                    room=room,
-                    locked=locked,
-                    link=link,
+                    self.connect, name=raw[0], room=room, locked=locked, id=id
                 )
             )
             loadClasses()
             i += 1
-        return Classes(classes)
+        self.__list = classes
+        self.__lastUpdate = datetime.now()
+        return self
 
     @property
-    def list(self):
+    def list(self) -> List[Class]:
         return self.__list
 
     @property

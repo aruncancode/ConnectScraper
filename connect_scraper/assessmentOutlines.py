@@ -3,11 +3,15 @@ import time
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from typing import Tuple
 
 
 class Mark:
     def __init__(
-        self, name: str, rawScore: [float, float], weightedMark: [float, float]
+        self,
+        name: str,
+        rawScore: Tuple[float, float],
+        weightedMark: Tuple[float, float],
     ):
         self.__name = name
         self.__rawScore = rawScore
@@ -113,7 +117,7 @@ def getAssessmentOutlines(self):
                     except ValueError:
                         newMarks.append(None)
                 groupDict[lastHeader][lastSectHeader].append(
-                    Mark(desc, newMarks[0:2], newMarks[2:4])
+                    Mark(desc, tuple(newMarks[0:2]), tuple(newMarks[2:4]))
                 )
             else:
                 raise Exception("Found something odd in the group.")
