@@ -1,7 +1,8 @@
-from . import HOMEPAGE_LINK, BASE_ANNOUNCMENT_LINK
+from . import HOMEPAGE_LINK
 from .notice import Notice
-from datetime import datetime
 from .submission import Submission
+from .classes import ClassPage
+from datetime import datetime
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -65,7 +66,7 @@ class HomePage:
         )
         link = int(
             self.__parent.browser.current_url.split("#")[0]
-            .replace(BASE_ANNOUNCMENT_LINK, "")
+            .replace(ClassPage.getBasePageLink("announcements"), "")
             .split("&")[0]
         )
         self.__goToHomePage()

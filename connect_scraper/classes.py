@@ -18,12 +18,11 @@ class ClassPage:
         self.link = self.pageLink() if self.page is not None else None
 
     def pageLink(self) -> str:
-        return (
-            BASE_CLASS_LINK
-            + self.page
-            + "?coisp=DomainSchoolClass:"
-            + str(self.parent.id)
-        )
+        return self.getPageLink(self.page) + str(self.parent.id)
+
+    @staticmethod
+    def getBasePageLink(page: str):
+        return BASE_CLASS_LINK + page + "?coisp=DomainSchoolClass:"
 
 
 class Notices(ClassPage):
