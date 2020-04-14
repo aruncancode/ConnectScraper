@@ -41,7 +41,7 @@ class Mark:
             else:
                 return float(n)
 
-        return list(map(convrt, str.split("/")))
+        return tuple(map(convrt, str.split("/")))
 
 
 class MarksGroup:
