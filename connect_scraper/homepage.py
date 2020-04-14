@@ -5,13 +5,14 @@ from .submission import Submission
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from typing import List
 
 
 class HomePage:
     def __init__(self, parent):
         self.__parent = parent
         self.__goToHomePage()
-        self.__lastUpdate = datetime.now()
+        self.__lastUpdate = None
 
     def __goToHomePage(self):
         self.__parent.get(HOMEPAGE_LINK)
@@ -20,7 +21,7 @@ class HomePage:
     def lastUpdate(self):
         return self.__lastUpdate
 
-    def getLatestNotice(self):
+    def getLatestNotice(self) -> List[Notice]:
         readButtonXPATH = '//*[@id="v-latestinformationportlet_WAR_connectrvportlet_INSTANCE_WqBA68MkuxAs_LAYOUT_215"]/div/div[2]/div/div[1]/div[2]/span/span'  # noqa
         WebDriverWait(self.__parent.browser, 20).until(
             EC.presence_of_element_located((By.XPATH, readButtonXPATH,))
@@ -69,9 +70,11 @@ class HomePage:
         )
         self.__goToHomePage()
         # TODO: Add capability to download attachments.
+
+        self.__lastUpdate = datetime.now()
         return Notice(title, author, authorType, rawBody, views, time, link)
 
-    def getNextSubmissions(self):
+    def getNextSubmissions(self) -> List[Submission]:
         # TODO: Make this much cleaner. Check if this works for
         #       0 < no. of submissions < 3
         submissionsBoxXPATH = '//*[@id="v-nextsubmissionportlet_WAR_connectrvportlet_INSTANCE_hxAR8l8SbS5Q_LAYOUT_215"]/div/div[2]/div'  # noqa
@@ -135,4 +138,5 @@ class HomePage:
                 self.__goToHomePage()
                 openMore()
 
+        self.__lastUpdate = datetime.now()
         return submissions
