@@ -1,4 +1,4 @@
-from . import BASE_SUBMISSIONS_LINK
+from .classes import ClassPage
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from datetime import datetime
@@ -58,7 +58,9 @@ class Submission:
             '//*[@id="v-submissionportlet_WAR_connectrvportlet_INSTANCE_IQdBhuiMMrFp_LAYOUT_248"]/div/div[2]/div[3]/div/div[2]',  # noqa
         )
         classId = int(
-            browser.current_url.replace(BASE_SUBMISSIONS_LINK, "").split("&")[0]
+            browser.current_url.replace(
+                ClassPage.getBasePageLink("submissions"), ""
+            ).split("&")[0]
         )
         dueDateText = submissionBox.find_element(
             By.XPATH, "./div[2]/div[2]",
