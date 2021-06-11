@@ -21,7 +21,7 @@ setup(
         "selenium==4.0.0a5",
         "soupsieve==2.0",
         "urllib3==1.25.8",
-        "websockets==8.1",
+        "websockets==9.1",
         "yarl==1.4.2",
         "zope.interface==5.0.2",
     ],
